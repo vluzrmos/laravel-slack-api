@@ -3,7 +3,7 @@
 
 
 ## Instalation
-<code>composer require "vluzrmos/slack-api=dev-master"</code>
+<code>composer require "vluzrmos/slack-api=~0.0"</code>
 
 Add to <code>config/app.php</code>
 ```php
