@@ -31,9 +31,22 @@ configure your slack team token in <code>config/services.php</code>
 
 ## Usage
 ```php
-    SlackApi::get('users.list')
-    SlackApi::get('channels.list')
-    SlackApi::post('users.admin.invite')
+// List users on your team
+SlackApi::get('users.list');
+
+// List channels on your team
+SlackApi::get('channels.list');
+
+// Invite users from email
+SlackApi::post('users.admin.invite', ['body' => [
+    'first_name' => 'John',
+    'last_name'  => 'Doe',
+    'email' => 'example@example.com',
+    '_attempts' => 1,
+    'channels' => 'UXE-!12312,UE0A-23123' //get the channels ids with SlackApi::get('channels.list')
+]]);
+
+...
 ```
     
 ## License
