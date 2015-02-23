@@ -1,6 +1,7 @@
 {
     "name": "vluzrmos/slack-api",
     "description": "Class for Slack.com WEB API.",
+    "license": "DBAD",
     "authors": [
         {
             "name": "Vagner do Carmo",
