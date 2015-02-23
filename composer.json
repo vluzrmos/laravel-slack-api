@@ -2,6 +2,7 @@
     "name": "vluzrmos/slack-api",
     "description": "Class for Slack.com WEB API.",
     "license": "DBAD",
+    "keywords":["Laravel", "Slack", "API"],
     "authors": [
         {
             "name": "Vagner do Carmo",
