@@ -3,8 +3,10 @@
 namespace Vluzrmos\SlackApi;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Traits\Macroable;
 
-class SlackApi{
+class SlackApi {
+  use Macroable;
 
   /**
    *

@@ -46,7 +46,19 @@ SlackApi::post('users.admin.invite', ['body' => [
     'channels' => 'UXE-!12312,UE0A-23123' //get the channels ids with SlackApi::get('channels.list')
 ]]);
 
-...
+//or create macros to common functions:
+
+SlackApi::macro('inviteMember', function($email, $username="", $channels=""){
+    return SlackApi::post('users.admin.invite', ['body' => [
+        'first_name' => $username,
+        'email' => $email,
+        '_attempts' => 1,
+        'channels' => $channels
+    ]]);
+});
+
+SlackApi::inviteMember('example@example.com', "John Doe");
+
 ```
     
 ## License
