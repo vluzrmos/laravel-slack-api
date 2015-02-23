@@ -29,6 +29,15 @@ class SlackApi{
     $this->token = $token;
   }
 
+  /**
+   * @param string $method
+   * @param string $url
+   * @param array $parameters
+   * @return mixed;
+   */
+  public function method($method = "get", $url="", $parameters = []){
+    return json_decode(($this->getClient()->$method($url, $parameters)->getBody()->getContents()), true);
+  }
 
   /**
    * Send a GET Request
@@ -37,7 +46,10 @@ class SlackApi{
    * @return \GuzzleHttp\Message\ResponseInterface
    */
   public function get($apiMethod, $parameters = []){
-    return $this->getClient()->get($apiMethod, $parameters);
+    $url = $this->getUrl($apiMethod);
+    $parameters = $this->mergeParameters($parameters);
+
+    return $this->method('get', $url, $parameters);
   }
 
   /**
@@ -47,7 +59,10 @@ class SlackApi{
    * @return \GuzzleHttp\Message\ResponseInterface
    */
   public function post($apiMethod, $parameters = []){
-    return $this->getClient()->post($this->getUrl($apiMethod), $this->mergeParameters($parameters));
+    $url = $this->getUrl($apiMethod);
+    $parameters = $this->mergeParameters($parameters);
+
+    return $this->method('post', $url, $parameters);
   }
 
   /**
@@ -57,7 +72,10 @@ class SlackApi{
    * @return \GuzzleHttp\Message\ResponseInterface
    */
   public function put($apiMethod, $parameters = []){
-    return $this->getClient()->put($this->getUrl($apiMethod), $this->mergeParameters($parameters));
+    $url = $this->getUrl($apiMethod);
+    $parameters = $this->mergeParameters($parameters);
+
+    return $this->method('put', $url, $parameters);
   }
 
   /**
@@ -67,7 +85,10 @@ class SlackApi{
    * @return \GuzzleHttp\Message\ResponseInterface
    */
   public function delete($apiMethod, $parameters = []){
-    return $this->getClient()->delete($this->getUrl($apiMethod), $this->mergeParameters($parameters));
+    $url = $this->getUrl($apiMethod);
+    $parameters = $this->mergeParameters($parameters);
+
+    return $this->method('delete', $url, $parameters);
   }
 
   /**
@@ -77,7 +98,10 @@ class SlackApi{
    * @return \GuzzleHttp\Message\ResponseInterface
    */
   public function patch($apiMethod, $parameters = []){
-    return $this->getClient()->patch($this->getUrl($apiMethod), $this->mergeParameters($parameters));
+    $url = $this->getUrl($apiMethod);
+    $parameters = $this->mergeParameters($parameters);
+
+    return $this->method('patch', $url, $parameters);
   }
 
   /**
@@ -86,7 +110,7 @@ class SlackApi{
    * @return string
    */
   protected function getUrl($method=null){
-    return str_finish($this->url, "/api/").$method;
+    return str_finish($this->url, "/").$method;
   }
 
   /**
@@ -108,7 +132,7 @@ class SlackApi{
         'token' => $this->getToken()
     ], array_get($parameters, 'query', []));
 
-    $parameters['body'] = array_get($parameters, 'body', []);
+    $parameters['body'] = array_get($parameters, 'body');
 
     return $parameters;
   }

@@ -1,6 +1,5 @@
 <?php namespace Vluzrmos\SlackApi;
 
-use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class SlackApiServiceProvider extends ServiceProvider {
@@ -20,15 +19,15 @@ class SlackApiServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-    $this->app->bind('slackpi', function(){
-      $client = new Client;
-      $verify_path = $this->app->config('services.slack.ssl_verify');
+    $this->app->bind('slackapi', function(){
+      $client = new \GuzzleHttp\Client;
+      $verify_path = config('services.slack.ssl_verify');
 
       if(!empty($verify_path) and file_exists($verify_path)){
         $client->setDefaultOption('verify', $verify_path);
       }
 
-      return new SlackApi($client, $this->app->config('services.slack.token'));
+      return new \Vluzrmos\SlackApi\SlackApi($client, config('services.slack.token'));
     });
 	}
 
