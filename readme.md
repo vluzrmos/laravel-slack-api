@@ -1,6 +1,6 @@
 ## Laravel 5 - Slack API Facade
 
-
+This package provides a simple way to get json objects provided by [Slack API](https://api.slack.com), all allowed methods you could see here: [Slack Web API Methods](https://api.slack.com/methods).
 
 ## Instalation
 <code>composer require "vluzrmos/slack-api=~0.0"</code>
@@ -46,8 +46,9 @@ SlackApi::post('users.admin.invite', ['body' => [
     'channels' => 'UXE-!12312,UE0A-23123' //get the channels ids with SlackApi::get('channels.list')
 ]]);
 
-//or create macros to common functions:
+// or any method oh the  Slack Web API Methods - https://api.slack.com/methods.
 
+//or create macros to common functions:
 SlackApi::macro('inviteMember', function($email, $username="", $channels=""){
     return SlackApi::post('users.admin.invite', ['body' => [
         'first_name' => $username,
@@ -59,6 +60,25 @@ SlackApi::macro('inviteMember', function($email, $username="", $channels=""){
 
 SlackApi::inviteMember('example@example.com', "John Doe");
 
+// HTTP Verbs avaliable: (in most cases, you will only need the GET and POST verbs)
+SlackApi::get($apiMethod, $parameters);
+SlackApi::post($apiMethod, $parameters);
+SlackApi::put($apiMethod, $parameters);
+SlackApi::delete($apiMethod, $parameters);
+SlackApi::patch($apiMethod, $parameters);
+
+//Parameters settings
+$parameters = [
+    'query' => [
+        'something' => 'value'
+    ],
+    'body' => [
+        'anotherthing' => 'anothervalue'
+    ]
+];
+
+The query parameters will append values to the url like: &something=value
+The body parameters will be sent like form-data
 ```
     
 ## License
