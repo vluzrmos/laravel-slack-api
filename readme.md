@@ -2,6 +2,8 @@
 
 This package provides a simple way to get json objects provided by [Slack API](https://api.slack.com), all allowed methods you could see here: [Slack Web API Methods](https://api.slack.com/methods).
 
+[![Latest Stable Version](https://poser.pugx.org/vluzrmos/slack-api/v/stable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Total Downloads](https://poser.pugx.org/vluzrmos/slack-api/downloads.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Latest Unstable Version](https://poser.pugx.org/vluzrmos/slack-api/v/unstable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![License](https://poser.pugx.org/vluzrmos/slack-api/license.svg)](https://packagist.org/packages/vluzrmos/slack-api)
+
 ## Instalation
 <code>composer require "vluzrmos/slack-api=~0.0"</code>
 
@@ -23,7 +25,7 @@ configure your slack team token in <code>config/services.php</code>
 ```php 
     
 'slack' => [
-    'token' => 'xop-sp-easeu-erahsuer-esrasher', //user token with admin primilegies https://api.slack.com/web#authentication,
+    'token' => 'xop-sp-easeu-erahsuer-esrasher', //user token with admin privilegies https://api.slack.com/web#authentication,
     'ssl_verify' => 'path/to/ssl/certificates/curl-ca-bundle.crt' // by default the git curl-ca-bundle.crt will be good. it is in /your-git-dir/git/curl-ca-bundle.crt
 ]
 
