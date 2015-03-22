@@ -27,8 +27,8 @@ class SlackApi {
   private $url = "https://slack.com/api";
 
   function __construct(Client $client, $token=null){
-    $this->client = $client;
-    $this->token = $token;
+    $this->setClient($client);
+    $this->setToken($token);
   }
 
   /**
@@ -123,6 +123,50 @@ class SlackApi {
     return $this->token;
   }
 
+  /**
+   * Set the token of your slack team member (be sure is admin token)
+   * @param $token
+   */
+  public function setToken($token){
+    $this->token = $token;
+  }
+
+  /**
+   * Configures the Guzzle Client
+   * @param \GuzzleHttp\Client|Callback|null $client
+   * @param String $verify SSL cert used for HTTPS requests
+   */
+  public function setClient($client = null, $verify=null){
+    if(is_callable($client)){
+      $this->client = value($client);
+    }
+    elseif(is_null($this->client)){
+      if(is_null($client)){
+        $this->client = new Client();
+      }
+      else{
+        $this->client = $client;
+      }
+    }
+
+    $this->setSSLVerfyPath($verify);
+  }
+
+  /**
+   * Configures the path to SSL Cert used on every HTTPS request
+   * @param String|null $path
+   */
+  public function setSSLVerfyPath($path = null){
+    $this->getClient()->setDefaultOption('verify', empty($path)?$this->getSSLVerifyPath():$path);
+  }
+
+  /**
+   * Get the SSL cert used on every HTTPS request
+   * @return string
+   */
+  public function getSSLVerifyPath(){
+    return $this->client->getDefaultOption('verify')?:realpath(__DIR__."../../../ssl/curl-ca-bundle.crt");
+  }
   /**
    * Merge parameters of the request with token em timestamp string
    * @param $parameters
