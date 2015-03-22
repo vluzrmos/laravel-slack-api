@@ -3,6 +3,7 @@
 namespace Vluzrmos\SlackApi;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Traits\Macroable;
 
 class SlackApi {
@@ -144,23 +145,21 @@ class SlackApi {
     if(is_callable($client)){
       $this->client = value($client);
     }
-    elseif(is_null($this->client)){
-      if(is_null($client)){
-        $this->client = new Client();
-      }
-      else{
-        $this->client = $client;
-      }
+    elseif(is_null($client) and is_null($this->client)){
+      $this->client = new Client();
+    }
+    else{
+      $this->client = $client;
     }
 
-    $this->setSSLVerfyPath($verify);
+    $this->setSSLVerifyPath($verify);
   }
 
   /**
    * Configures the path to SSL Cert used on every HTTPS request
    * @param String|null $path
    */
-  public function setSSLVerfyPath($path = null){
+  public function setSSLVerifyPath($path = null){
     $this->getClient()->setDefaultOption('verify', empty($path)?$this->getSSLVerifyPath():$path);
   }
 
@@ -169,7 +168,14 @@ class SlackApi {
    * @return string
    */
   public function getSSLVerifyPath(){
-    return $this->client->getDefaultOption('verify')?:realpath(__DIR__."../../../ssl/curl-ca-bundle.crt");
+    $default = $this->getClient()->getDefaultOption('verify');
+
+    if(empty($default) or $default === true){
+      return realpath(__DIR__."/../../../ssl/curl-ca-bundle.crt");
+    }
+    else{
+      return $default;
+    }
   }
   /**
    * Merge parameters of the request with token em timestamp string
