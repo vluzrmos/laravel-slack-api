@@ -26,7 +26,11 @@ class SlackApi {
    */
   private $url = "https://slack.com/api";
 
-  function __construct(Client $client, $token=null){
+  /**
+   * @param Client|null $client
+   * @param String|null $token
+   */
+  function __construct(Client $client = null, $token=null){
     $this->setClient($client);
     $this->setToken($token);
   }
