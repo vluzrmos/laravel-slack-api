@@ -10,7 +10,7 @@ This package provides a simple way to get json objects provided by [Slack API](h
 Add to <code>config/app.php</code>
 ```php
 'providers' => [
-    'Vluzrmos\SlackApi\SlackApiServiceProviders',
+    'Vluzrmos\SlackApi\SlackApiServiceProvider',
 ]
 ```
 
