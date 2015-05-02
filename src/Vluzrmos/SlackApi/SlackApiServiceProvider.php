@@ -20,17 +20,22 @@ class SlackApiServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-    $this->app->singleton('slackapi', function(){
-      $api = new SlackApi(null, config('services.slack.token'));
-
-
-      $verify_path = config('services.slack.ssl_verify');
-
-      if(!empty($verify_path) and file_exists($verify_path)){
-        $api->setSSLVerifyPath($verify_path);
+	    /* Lumen autoload services configs */
+	    if(str_contains($this->app->version(), 'Lumen')){
+        $this->app->configure('services');
       }
+        
+      $this->app->singleton('slackapi', function(){
+        $api = new SlackApi(null, config('services.slack.token'));
+  
+  
+        $verify_path = config('services.slack.ssl_verify');
+  
+        if(!empty($verify_path) and file_exists($verify_path)){
+          $api->setSSLVerifyPath($verify_path);
+        }
 
-      return $api;
+        return $api;
     });
 	}
 
