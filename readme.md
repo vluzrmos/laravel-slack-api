@@ -35,7 +35,7 @@ Add that line on <code>bootstrap/app.php</code>
 
 If you want to use the facade, add this lines on <code>bootstrap/app.php</code>
 ```php
-class_alias('SlackApi', 'Vluzrmos\SlackApi\SlackApiFacade');
+class_alias('Vluzrmos\SlackApi\SlackApiFacade', 'SlackApi');
 ```
 Otherwise, just use the singleton:
 
