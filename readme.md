@@ -1,4 +1,4 @@
-## Laravel 5 e Lumen - Slack API Facade
+## Laravel 5 e Lumen - Slack API
 
 This package provides a simple way to get json objects provided by [Slack API](https://api.slack.com), all allowed methods you could see here: [Slack Web API Methods](https://api.slack.com/methods).
 
