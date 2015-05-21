@@ -49,8 +49,7 @@ configure your slack team token in <code>config/services.php</code>
 ```php 
     
 'slack' => [
-    'token' => 'xop-sp-easeu-erahsuer-esrasher', //user token with admin privilegies https://api.slack.com/web#authentication,
-    'ssl_verify' => 'path/to/ssl/certificates/curl-ca-bundle.crt' // (Optional) by default the git curl-ca-bundle.crt will be good, it is in /your-git-dir/git/curl-ca-bundle.crt
+    'token' => 'xop-sp-easeu-erahsuer-esrasher'
 ]
 
 ```
@@ -106,7 +105,31 @@ $parameters = [
 The query parameters will append values to the url like: &something=value
 The body parameters will be sent like form-data
 ```
+
+## Using Dependencie Injection
+
+```php
+<?php 
+
+namespace App\Http\Controllers;    
     
+use Vluzrmos\SlackApi\Contracts\SlackApi;
+
+class YourController extends Controller{
+    
+    /** @var  SlackApi */
+    protected $slack;
+    
+    public function __construct(SlackApi as $slack){
+        $this->slack = $slack;   
+    }
+    
+    public function controllerMethod(){
+        $usersList = $this->slack->get('users.list');
+    }
+}
+```
+
 ## License
 
 [DBAD License](https://dbad-license.org).
