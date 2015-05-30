@@ -4,8 +4,6 @@ namespace Vluzrmos\SlackApi\Contracts;
 
 interface SlackApi
 {
-    public function method($method, $url, $parameters);
-
     public function get($apiMethod, $parameters = []);
 
     public function post($apiMethod, $parameters = []);

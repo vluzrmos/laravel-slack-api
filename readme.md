@@ -63,24 +63,24 @@ SlackApi::get('users.list');
 SlackApi::get('channels.list');
 
 // Invite users from email
-SlackApi::post('users.admin.invite', ['body' => [
+SlackApi::post('users.admin.invite', [
     'first_name' => 'John',
     'last_name'  => 'Doe',
     'email' => 'example@example.com',
     '_attempts' => 1,
     'channels' => 'UXE-!12312,UE0A-23123' //get the channels ids with SlackApi::get('channels.list')
-]]);
+]);
 
 // or any method oh the  Slack Web API Methods - https://api.slack.com/methods.
 
 //or create macros to common functions:
 SlackApi::macro('inviteMember', function($email, $username="", $channels=""){
-    return SlackApi::post('users.admin.invite', ['body' => [
+    return SlackApi::post('users.admin.invite', [
         'first_name' => $username,
         'email' => $email,
         '_attempts' => 1,
         'channels' => $channels
-    ]]);
+    ]);
 });
 
 SlackApi::inviteMember('example@example.com', "John Doe");
@@ -93,17 +93,12 @@ SlackApi::delete($apiMethod, $parameters);
 SlackApi::patch($apiMethod, $parameters);
 
 //Parameters settings
+
 $parameters = [
-    'query' => [
-        'something' => 'value'
-    ],
-    'body' => [
+        'something' => 'value',
         'anotherthing' => 'anothervalue'
-    ]
 ];
 
-The query parameters will append values to the url like: &something=value
-The body parameters will be sent like form-data
 ```
 
 ## Using Dependencie Injection
@@ -116,7 +111,6 @@ namespace App\Http\Controllers;
 use Vluzrmos\SlackApi\Contracts\SlackApi;
 
 class YourController extends Controller{
-    
     /** @var  SlackApi */
     protected $slack;
     
