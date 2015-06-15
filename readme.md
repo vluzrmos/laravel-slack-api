@@ -16,6 +16,8 @@ Add to <code>config/app.php</code>
     'Vluzrmos\SlackApi\SlackApiServiceProvider',
 ]
 ```
+> On Laravel or Lumen 5.1 you could use ::class notation, it doens't matter.
+
 
 and add the Facade to your aliases:
 ```php
@@ -23,6 +25,7 @@ and add the Facade to your aliases:
     'SlackApi' => 'Vluzrmos\SlackApi\SlackApiFacade',
 ]
 ```
+> On On Laravel or Lumen you could use ::class notation, it doens't matter.
 
 ## Instalation on Lumen
 
