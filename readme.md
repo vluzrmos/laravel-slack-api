@@ -131,7 +131,7 @@ namespace App\Http\Controllers;
 use Vluzrmos\SlackApi\Contracts\SlackUser;
 
 class YourController extends Controller{
-    /** @var  SlackApi */
+    /** @var  SlackUser */
     protected $slackUser;
     
     public function __construct(SlackUser as $slackUser){
