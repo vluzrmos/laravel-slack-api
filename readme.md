@@ -1,6 +1,6 @@
 ## Laravel 5 e Lumen - Slack API
 
-This package provides a simple way to get json objects provided by [Slack API](https://api.slack.com), all allowed methods you could see here: [Slack Web API Methods](https://api.slack.com/methods).
+This package provides a simple way to use [Slack API](https://api.slack.com).
 
 [![Latest Stable Version](https://poser.pugx.org/vluzrmos/slack-api/v/stable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Total Downloads](https://poser.pugx.org/vluzrmos/slack-api/downloads.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Latest Unstable Version](https://poser.pugx.org/vluzrmos/slack-api/v/unstable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![License](https://poser.pugx.org/vluzrmos/slack-api/license.svg)](https://packagist.org/packages/vluzrmos/slack-api)
 
@@ -13,19 +13,33 @@ Add to <code>config/app.php</code>
 
 ```php
 'providers' => [
-    'Vluzrmos\SlackApi\SlackApiServiceProvider',
+    Vluzrmos\SlackApi\SlackApiServiceProvider::class,
 ]
 ```
-> On Laravel or Lumen 5.1 you could use ::class notation, it doens't matter.
+> The ::class notation is optional.
 
 
-and add the Facade to your aliases:
+and add the Facades to your aliases, if you need it:
+
 ```php
-'aliases' => [
-    'SlackApi' => 'Vluzrmos\SlackApi\SlackApiFacade',
+[
+    'aliases' => [
+        'SlackApi'              => Vluzrmos\SlackApi\Facades\SlackApi::class,
+        'SlackChannel'          => Vluzrmos\SlackApi\Facades\SlackChannel::class,
+        'SlackChat'             => Vluzrmos\SlackApi\Facades\SlackChat::class,
+        'SlackGroup'            => Vluzrmos\SlackApi\Facades\SlackGroup::class,
+        'SlackFile'             => Vluzrmos\SlackApi\Facades\SlackFile::class,
+        'SlackSearch'           => Vluzrmos\SlackApi\Facades\SlackSearch::class,
+        'SlackInstantMessage'   => Vluzrmos\SlackApi\Facades\SlackInstantMessage::class,
+        'SlackUser'             => Vluzrmos\SlackApi\Facades\SlackUser::class,
+        'SlackStar'             => Vluzrmos\SlackApi\Facades\SlackStar::class,
+        'SlackUserAdmin'        => Vluzrmos\SlackApi\Facades\SlackUserAdmin::class,
+        'SlackRealTimeMessage'  => Vluzrmos\SlackApi\Facades\SlackRealTimeMessage::class,
+        'SlackTeam'             => Vluzrmos\SlackApi\Facades\SlackTeam::class,
+    ]
 ]
 ```
-> On On Laravel or Lumen you could use ::class notation, it doens't matter.
+> The ::class notation is optional.
 
 ## Instalation on Lumen
 
@@ -38,70 +52,67 @@ Add that line on <code>bootstrap/app.php</code>
 
 If you want to use the facade, add this lines on <code>bootstrap/app.php</code>
 ```php
-class_alias('Vluzrmos\SlackApi\SlackApiFacade', 'SlackApi');
+class_alias('Vluzrmos\SlackApi\Facades\SlackApi', 'SlackApi');
+class_alias('Vluzrmos\SlackApi\Facades\SlackChannel', 'SlackChannel');
+class_alias('Vluzrmos\SlackApi\Facades\SlackChat', 'SlackChat');
+//...
 ```
+
 Otherwise, just use the singleton:
 
 ```php
-  $slackapi = app('slackapi');
+$slackapi     = app('slack.api');
+$slackchat    = app('slack.chat');
+$slackchannel = app('slack.channel');
+//...
+//...
 ```
 
 ## Configuration
 
 configure your slack team token in <code>config/services.php</code> 
 ```php 
-    
-'slack' => [
-    'token' => 'xop-sp-easeu-erahsuer-esrasher'
+[
+    //...,
+    'slack' => [
+        'token' => 'xop-sp-easeu-erahsuer-esrasher'
+    ]
 ]
-
 ```
 
 ## Usage
 ```php
-// List users on your team
-SlackApi::get('users.list');
+//Lists all users on your team
+SlackUser::lists(); //all()
 
-// List channels on your team
-SlackApi::get('channels.list');
+//Lists all channels on your team
+SlackChannel::lists(); //all()
 
-// Invite users from email
-SlackApi::post('users.admin.invite', [
-    'first_name' => 'John',
-    'last_name'  => 'Doe',
-    'email' => 'example@example.com',
-    '_attempts' => 1,
-    'channels' => 'UXE-!12312,UE0A-23123' //get the channels ids with SlackApi::get('channels.list')
+//List all groups
+SlackGroup::lists(); //all()
+
+//Invite a new member to your team
+SlackUserAdmin::invite("example@example.com", ['first_name' => 'John', 'last_name' => 'Doe']);
+
+//Send a message to someone or channel or group
+SlackChat::message('#general', 'Hello my friends!');
+
+//Upload a file/snippet
+SlackFile::upload([
+    'filename' => 'sometext.txt', 
+    'title' => 'text', 
+    'content' => 'Nice contents',
+    'channels' => 'C0440SZU6' //can be channel, users, or groups ID
 ]);
 
-// or any method oh the  Slack Web API Methods - https://api.slack.com/methods.
+// Search for files or messages
+SlackSearch::all('my message');
 
-//or create macros to common functions:
-SlackApi::macro('inviteMember', function($email, $username="", $channels=""){
-    return SlackApi::post('users.admin.invite', [
-        'first_name' => $username,
-        'email' => $email,
-        '_attempts' => 1,
-        'channels' => $channels
-    ]);
-});
+// Search for files
+SlackSearch::files('my file');
 
-SlackApi::inviteMember('example@example.com', "John Doe");
-
-// HTTP Verbs avaliable: (in most cases, you will only need the GET and POST verbs)
-SlackApi::get($apiMethod, $parameters);
-SlackApi::post($apiMethod, $parameters);
-SlackApi::put($apiMethod, $parameters);
-SlackApi::delete($apiMethod, $parameters);
-SlackApi::patch($apiMethod, $parameters);
-
-//Parameters settings
-
-$parameters = [
-        'something' => 'value',
-        'anotherthing' => 'anothervalue'
-];
-
+// Search for messages
+SlackSearch::messages('my message');
 ```
 
 ## Using Dependencie Injection
@@ -111,21 +122,92 @@ $parameters = [
 
 namespace App\Http\Controllers;    
     
-use Vluzrmos\SlackApi\Contracts\SlackApi;
+use Vluzrmos\SlackApi\Contracts\SlackUser;
 
 class YourController extends Controller{
     /** @var  SlackApi */
-    protected $slack;
+    protected $slackUser;
     
-    public function __construct(SlackApi as $slack){
-        $this->slack = $slack;   
+    public function __construct(SlackUser as $slackUser){
+        $this->slackUser = $slackUser;   
     }
     
     public function controllerMethod(){
-        $usersList = $this->slack->get('users.list');
+        $usersList = $this->slackUser->lists();
     }
 }
 ```
+
+## All Injectable Contracts:
+
+### Generic API
+`Vluzrmos\SlackApi\Contracts\SlackApi`
+Allows you to do generic requests to the api with the following http verbs:
+`get`, `post`, `put`, `patch`, `delete` ...
+
+All allowed methods you could see here: [Slack Web API Methods](https://api.slack.com/methods).
+
+> Note: All of these methods of that class and others returns an array.
+
+### Channels API
+`Vluzrmos\SlackApi\Contracts\SlackChannel`
+
+Allows you to operate channels:
+`invite`, `archive`, `rename`, `join`, `kick`, `setPurpose` ...
+
+
+### Chat API
+`Vluzrmos\SlackApi\Contracts\SlackChat`
+
+Allows you to send, update and delete messages with methods:
+`delete`, `message`, `update`.
+
+### Files API
+`Vluzrmos\SlackApi\Contracts\SlackFile`
+Allows you to send, get info, delete,  or just list files:
+`info`, `lists`, `upload`, `delete`.
+
+### Groups API
+`Vluzrmos\SlackApi\Contracts\SlackGroup`
+
+Same methods of the SlackChannel, but that operates with groups and have adicional methods:
+`open`, `close`, `createChild`
+
+### Instant Messages API (Direct Messages)
+`Vluzrmos\SlackApi\Contracts\SlackInstantMessage`
+
+Allows you to manage direct messages to your team members.
+
+### Real Time Messages API
+`Vluzrmos\SlackApi\Contracts\SlackRealTimeMessage`
+
+Allows you list all channels and user presence at the moment.
+
+
+### Search API
+`Vluzrmos\SlackApi\Contracts\SlackSearch`
+
+Find messages or files.
+
+### Stars API
+`Vluzrmos\SlackApi\Contracts\SlackStar`
+
+List all of starred itens.
+
+### Team API
+`Vluzrmos\SlackApi\Contracts\SlackTeam`
+
+Get information about your team.
+
+### Users API
+`Vluzrmos\SlackApi\Contracts\SlackUser`
+
+Get information about an user on your team or just check your presence ou status.
+
+### Users Admin API
+`Vluzrmos\SlackApi\Contracts\SlackUserAdmin`
+
+Invite new members to your team.
 
 ## License
 

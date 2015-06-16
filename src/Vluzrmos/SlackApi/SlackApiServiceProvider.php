@@ -18,7 +18,17 @@ class SlackApiServiceProvider extends ServiceProvider
 	 * @var array
 	 */
 	protected $methods = [
-		'Channel', 'Group', 'Chat', 'InstantMessage', 'Search', 'File'
+		'Channel',
+		'Group',
+		'Chat',
+		'InstantMessage',
+		'Search',
+		'File',
+		'User',
+		'Team',
+		'Star',
+		'RealTimeMessage',
+		'UserAdmin'
 	];
 
 	/**
@@ -57,12 +67,13 @@ class SlackApiServiceProvider extends ServiceProvider
 
 		$this->app->alias('Vluzrmos\SlackApi\Contracts\SlackApi', 'slack.api');
 
-
 		foreach($this->methods as $method){
 			$this->registerSlackMethod($method);
 		}
 
 		$this->app->alias('Vluzrmos\SlackApi\Contracts\SlackInstantMessage', 'slack.im');
+
+		$this->app->alias('Vluzrmos\SlackApi\Contracts\SlackRealTimeMessage', 'slack.rtm');
     }
 
     /**
