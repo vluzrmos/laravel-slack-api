@@ -102,7 +102,7 @@ class SlackApiServiceProvider extends ServiceProvider
 	public function registerSlackSingletons($contract, $class, $shortcut=null)
 	{
 		$this->app->singleton($contract, function () use ($class) {
-			return new $class($this->app['slack.api']);
+			return new $class($this->app['slack.api'], $this->app['cache.store']);
 		});
 
 		if($shortcut){

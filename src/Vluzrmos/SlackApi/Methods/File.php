@@ -5,7 +5,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackFile;
 
-class File extends AbstractMethod implements SlackFile
+class File extends SlackMethod implements SlackFile
 {
 	protected $methodsGroup = "files.";
 

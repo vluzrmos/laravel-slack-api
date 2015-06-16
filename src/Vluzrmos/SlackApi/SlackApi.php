@@ -40,24 +40,6 @@ class SlackApi implements Contract
     }
 
     /**
-     * @param string $method
-     * @param string $url
-     * @param array  $parameters
-     *
-     * @return mixed;
-     */
-    protected function method($method = 'get', $url = '', $parameters = [])
-    {
-		/** @var  \GuzzleHttp\Message\Response $response */
-		$response = $this->getHttpClient()->$method($url, $parameters);
-
-		/** @var  $contents */
-		$contents = $response->json();
-
-        return $contents;
-    }
-
-    /**
      * Send a GET Request.
      *
      * @param       $apiMethod
@@ -70,7 +52,7 @@ class SlackApi implements Contract
         $url = $this->getUrl($apiMethod);
         $parameters = $this->mergeParameters($parameters);
 
-        return $this->method('get', $url, $parameters);
+        return $this->http('get', $url, $parameters);
     }
 
     /**
@@ -86,7 +68,7 @@ class SlackApi implements Contract
         $url = $this->getUrl($apiMethod);
         $parameters = $this->mergeParameters($parameters);
 
-        return $this->method('post', $url, $parameters);
+        return $this->http('post', $url, $parameters);
     }
 
     /**
@@ -102,7 +84,7 @@ class SlackApi implements Contract
         $url = $this->getUrl($apiMethod);
         $parameters = $this->mergeParameters($parameters);
 
-        return $this->method('put', $url, $parameters);
+        return $this->http('put', $url, $parameters);
     }
 
     /**
@@ -118,7 +100,7 @@ class SlackApi implements Contract
         $url = $this->getUrl($apiMethod);
         $parameters = $this->mergeParameters($parameters);
 
-        return $this->method('delete', $url, $parameters);
+        return $this->http('delete', $url, $parameters);
     }
 
     /**
@@ -134,30 +116,37 @@ class SlackApi implements Contract
         $url = $this->getUrl($apiMethod);
         $parameters = $this->mergeParameters($parameters);
 
-        return $this->method('patch', $url, $parameters);
+        return $this->http('patch', $url, $parameters);
     }
 
-    /**
-     * Generate the url with the api $method.
-     *
-     * @param null $method
-     *
-     * @return string
-     */
-    protected function getUrl($method = null)
-    {
-        return str_finish($this->url, '/').$method;
-    }
 
-    /**
-     * Get the user token.
-     *
-     * @return null|string
-     */
-    protected function getToken()
-    {
-        return $this->token;
-    }
+
+
+	/**
+	 * Loads an Slack Method by its contract short name
+	 *
+	 * @param $method
+	 *
+	 * @example $slack->load('Channel')->lists()
+	 *
+	 * @return mixed
+	 */
+	public function load($method){
+		$contract = __NAMESPACE__."\\Contracts\\Slack{$method}";
+
+		return app($contract);
+	}
+
+	/**
+	 * Alias to ::load
+	 *
+	 * @param $method
+	 *
+	 * @return mixed
+	 */
+	public function __invoke($method){
+		return $this->load($method);
+	}
 
     /**
      * Set the token of your slack team member (be sure is admin token).
@@ -186,6 +175,25 @@ class SlackApi implements Contract
 
         $this->client->setDefaultOption('verify', false);
     }
+
+	/**
+	 * Performs an HTTP Request
+	 * @param string $verb HTTP Verb
+	 * @param string $url Url to the request
+	 * @param array  $parameters parameters to send
+	 *
+	 * @return array
+	 */
+	protected function http($verb = 'get', $url = '', $parameters = [])
+	{
+		/** @var  \GuzzleHttp\Message\Response $response */
+		$response = $this->getHttpClient()->$verb($url, $parameters);
+
+		/** @var  $contents */
+		$contents = $response->json();
+
+		return $contents;
+	}
 
     /**
      * Merge parameters of the request with token and timestamp string.
@@ -216,5 +224,26 @@ class SlackApi implements Contract
         return $this->client;
     }
 
+	/**
+	 * Generate the url with the api $method.
+	 *
+	 * @param null $method
+	 *
+	 * @return string
+	 */
+	protected function getUrl($method = null)
+	{
+		return str_finish($this->url, '/').$method;
+	}
+
+	/**
+	 * Get the user token.
+	 *
+	 * @return null|string
+	 */
+	protected function getToken()
+	{
+		return $this->token;
+	}
 
 }

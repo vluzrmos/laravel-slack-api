@@ -5,7 +5,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackChat;
 
-class Chat extends AbstractMethod implements SlackChat
+class Chat extends SlackMethod implements SlackChat
 {
 
 	protected $methodsGroup = "chat.";
@@ -52,7 +52,7 @@ class Chat extends AbstractMethod implements SlackChat
 	 */
 	public function message($channel, $text, $options = [])
 	{
-		return $this->method("postMessage", array_merge(compact('channel', 'text'), $options));
+		return $this->method("postMessage", array_merge(compact('channel', 'text'), ['as_user' => !isset($options['username'])], $options));
 	}
 
 	/**

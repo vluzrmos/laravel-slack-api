@@ -5,7 +5,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackUser;
 
-class User extends AbstractMethod implements SlackUser
+class User extends SlackMethod implements SlackUser
 {
 
 	protected $methodsGroup = "users.";
@@ -32,7 +32,9 @@ class User extends AbstractMethod implements SlackUser
 	 */
 	public function info($user)
 	{
-		return $this->method('info', compact('user'));
+		$user = $this->getUsersIDsByNicks($user);
+
+		return $this->method('info', ['user' => $user[0]]);
 	}
 
 	/**
@@ -77,5 +79,72 @@ class User extends AbstractMethod implements SlackUser
 	public function setPresence($presence)
 	{
 		return $this->method('setPresence', compact('presence'));
+	}
+
+	/**
+	 * Get an array of users id's by nicks
+	 *
+	 * @param string|array $nicks
+	 * @param bool         $force force to reload the users list
+	 *
+	 * @param int          $cacheMinutes Minutes or a Date to cache the results, default 1 minute
+	 *
+	 * @return array
+	 */
+	public function getUsersIDsByNicks($nicks, $force = false,  $cacheMinutes = 1){
+		$users = $this->cacheGet('list');
+
+		if(!$users || $force)
+		{
+			$users = $this->cachePut('list', $this->lists(), $cacheMinutes);
+		}
+
+		if(!is_array($nicks)) $nicks = preg_split('/, ?/', $nicks);
+
+		$usersIds = [];
+
+		foreach($users['members'] as $user)
+		{
+			foreach($nicks as $nick)
+			{
+				if($this->isUserNick($user, $nick))
+				{
+					$usersIds[] = $user['id'];
+				}
+				elseif($this->isSlackbotNick($nick))
+				{
+					$usersIds[] ='USLACKBOT';
+				}
+			}
+		}
+
+		return $usersIds;
+	}
+
+	/**
+	 * Verify if a given nick is for the user
+	 *
+	 * @param array $user
+	 * @param string $nick
+	 *
+	 * @return bool
+	 */
+	protected function isUserNick($user, $nick)
+	{
+		$nick = str_replace('@', '', $nick);
+
+		return $nick == $user['name'] || $nick == $user['id'];
+	}
+
+	/**
+	 * Check if a given nick is for the slackbot
+	 *
+	 * @param string $nick
+	 *
+	 * @return bool
+	 */
+	protected function isSlackbotNick($nick)
+	{
+		return $nick == 'slackbot' or $nick=='@slackbot' or $nick == 'USLACKBOT';
 	}
 }

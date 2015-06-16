@@ -4,7 +4,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackChannel;
 
-class Channel extends AbstractMethod implements SlackChannel
+class Channel extends SlackMethod implements SlackChannel
 {
 	protected $methodsGroup = "channels.";
 

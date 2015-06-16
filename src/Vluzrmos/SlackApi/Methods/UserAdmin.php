@@ -5,7 +5,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackUserAdmin;
 
-class UserAdmin extends AbstractMethod implements SlackUserAdmin
+class UserAdmin extends SlackMethod implements SlackUserAdmin
 {
 	protected $methodsGroup = "users.admin.";
 

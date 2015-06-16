@@ -150,11 +150,23 @@ class YourController extends Controller{
 `Vluzrmos\SlackApi\Contracts\SlackApi`
 
 Allows you to do generic requests to the api with the following http verbs:
-`get`, `post`, `put`, `patch`, `delete` ...
+`get`, `post`, `put`, `patch`, `delete` ... all allowed api methods you could see here: [Slack Web API Methods](https://api.slack.com/methods).
 
-All allowed methods you could see here: [Slack Web API Methods](https://api.slack.com/methods).
+And is also possible load a SlackMethod contract:
 
-> Note: All of these methods of that class and others returns an array.
+```php
+/** @var SlackChannel $channel **/
+$channel = $slack->load('Channel');
+$channel->lists();
+
+/** @var SlackChat $chat **/
+$chat = $slack->load('Chat');
+$chat->message('D98979F78', 'Hello my friend!');
+
+/** @var SlackUserAdmin $chat **/
+$admin = $slack('UserAdmin'); //Minimal syntax (invokable)
+$admin->invite('jhon.doe@example.com'); 
+```
 
 ### Channels API
 `Vluzrmos\SlackApi\Contracts\SlackChannel`

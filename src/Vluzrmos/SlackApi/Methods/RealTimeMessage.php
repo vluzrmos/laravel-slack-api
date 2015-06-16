@@ -5,7 +5,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackRealTimeMessage;
 
-class RealTimeMessage extends AbstractMethod implements SlackRealTimeMessage
+class RealTimeMessage extends SlackMethod implements SlackRealTimeMessage
 {
 	protected $methodsGroup = 'rtm.';
 

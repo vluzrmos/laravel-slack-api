@@ -5,7 +5,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackInstantMessage;
 
-class InstantMessage extends AbstractMethod implements SlackInstantMessage
+class InstantMessage extends SlackMethod implements SlackInstantMessage
 {
 
 	protected $methodsGroup = "im.";

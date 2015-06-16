@@ -11,7 +11,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackStar;
 
-class Star extends AbstractMethod implements SlackStar
+class Star extends SlackMethod implements SlackStar
 {
 
 	protected $methodsGroup = "stars.";

@@ -5,7 +5,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackSearch;
 
-class Search extends AbstractMethod implements SlackSearch
+class Search extends SlackMethod implements SlackSearch
 {
 
 	protected $methodsGroup = 'search.';

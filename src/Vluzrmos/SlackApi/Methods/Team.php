@@ -5,7 +5,7 @@ namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackTeam;
 
-class Team extends AbstractMethod implements SlackTeam
+class Team extends SlackMethod implements SlackTeam
 {
 	protected $methodsGroup = "team.";
 
