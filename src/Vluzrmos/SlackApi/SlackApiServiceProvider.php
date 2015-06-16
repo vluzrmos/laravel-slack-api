@@ -4,13 +4,6 @@ namespace Vluzrmos\SlackApi;
 
 use Illuminate\Support\ServiceProvider;
 
-use Vluzrmos\SlackApi\Methods\Channel;
-use Vluzrmos\SlackApi\Methods\Group;
-use Vluzrmos\SlackApi\Methods\Chat;
-use Vluzrmos\SlackApi\Methods\InstantMessage;
-use Vluzrmos\SlackApi\Methods\Search;
-use Vluzrmos\SlackApi\Methods\File;
-
 class SlackApiServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +12,32 @@ class SlackApiServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+
+	/**
+	 * Methods to register
+	 * @var array
+	 */
+	protected $methods = [
+		'Channel', 'Group', 'Chat', 'InstantMessage', 'Search', 'File'
+	];
+
+	/**
+	 * Default contracts namespace
+	 * @var string
+	 */
+	protected $contractsNamespace = 'Vluzrmos\SlackApi\Contracts';
+
+	/**
+	 * Default methods namespace
+	 * @var string
+	 */
+	protected $methodsNamespace   = 'Vluzrmos\SlackApi\Methods';
+
+	/**
+	 * Default prefix of facade accessors
+	 * @var string
+	 */
+	protected $shortcutPrefix  = "slack.";
 
     /**
      * Register the service provider.
@@ -30,39 +49,20 @@ class SlackApiServiceProvider extends ServiceProvider
             $this->app->configure('services');
         }
 
-        $this->app->singleton('slackapi', function () {
+        $this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackApi', function () {
             $api = new SlackApi(null, config('services.slack.token'));
 
             return $api;
         });
 
-        $this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackApi', function () {
-            return $this->app['slackapi'];
-        });
+		$this->app->alias('Vluzrmos\SlackApi\Contracts\SlackApi', 'slack.api');
 
-		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackChannel', function () {
-			return new Channel($this->app['slackapi']);
-		});
 
-		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackChat', function () {
-			return new Chat($this->app['slackapi']);
-		});
+		foreach($this->methods as $method){
+			$this->registerSlackMethod($method);
+		}
 
-		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackGroup', function () {
-			return new Group($this->app['slackapi']);
-		});
-
-		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackInstantMessage', function () {
-			return new InstantMessage($this->app['slackapi']);
-		});
-
-		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackSearch', function () {
-			return new Search($this->app['slackapi']);
-		});
-
-		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackFile', function () {
-			return new File($this->app['slackapi']);
-		});
+		$this->app->alias('Vluzrmos\SlackApi\Contracts\SlackInstantMessage', 'slack.im');
     }
 
     /**
@@ -72,6 +72,30 @@ class SlackApiServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['slackapi', 'Vluzrmos\SlackApi\Contracts\SlackApi'];
+        return ['slack.api'];
     }
+
+	public function registerSlackMethod($name){
+		$contract = str_finish($this->contractsNamespace, "\\")."Slack{$name}";
+		$shortcut = $this->shortcutPrefix.snake_case($name);
+		$class    = str_finish($this->methodsNamespace, "\\").$name;
+
+		$this->registerSlackSingletons($contract, $class, $shortcut);
+	}
+
+	/**
+	 * @param $contract
+	 * @param $class
+	 * @param $shortcut
+	 */
+	public function registerSlackSingletons($contract, $class, $shortcut=null)
+	{
+		$this->app->singleton($contract, function () use ($class) {
+			return new $class($this->app['slack.api']);
+		});
+
+		if($shortcut){
+			$this->app->alias($contract, $shortcut);
+		}
+	}
 }

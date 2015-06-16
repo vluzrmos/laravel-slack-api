@@ -1,16 +1,16 @@
 <?php
 
-namespace Vluzrmos\SlackApi;
+namespace Vluzrmos\SlackApi\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class SlackApiFacade extends Facade
+class SlackChat extends Facade
 {
   /**
    * @return string
    */
   protected static function getFacadeAccessor()
   {
-      return 'slackapi';
+      return 'slack.chat';
   }
 }
