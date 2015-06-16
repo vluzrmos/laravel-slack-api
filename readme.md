@@ -148,6 +148,7 @@ class YourController extends Controller{
 
 ### Generic API
 `Vluzrmos\SlackApi\Contracts\SlackApi`
+
 Allows you to do generic requests to the api with the following http verbs:
 `get`, `post`, `put`, `patch`, `delete` ...
 
@@ -170,6 +171,7 @@ Allows you to send, update and delete messages with methods:
 
 ### Files API
 `Vluzrmos\SlackApi\Contracts\SlackFile`
+
 Allows you to send, get info, delete,  or just list files:
 `info`, `lists`, `upload`, `delete`.
 
