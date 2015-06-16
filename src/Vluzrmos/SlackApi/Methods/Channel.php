@@ -27,7 +27,7 @@ class Channel extends AbstractMethod implements SlackChannel
 	 * @return array
 	 */
 	public function create($name){
-		return $this->method('archive', ['name' => $name]);
+		return $this->method('create', ['name' => $name]);
 	}
 
 	/**
@@ -36,7 +36,7 @@ class Channel extends AbstractMethod implements SlackChannel
 	 * and then continue paging using the instructions below.
 	 * @see https://api.slack.com/methods/channels.history
 	 *
-	 * @param        $channel Channel to fetch history for.
+	 * @param string $channel Channel to fetch history for.
 	 * @param int    $count Number of messages to return, between 1 and 1000.
 	 * @param string $latest End of time range of messages to include in results.
 	 * @param int    $oldest Start of time range of messages to include in results.

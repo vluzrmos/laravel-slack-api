@@ -3,8 +3,13 @@
 namespace Vluzrmos\SlackApi;
 
 use Illuminate\Support\ServiceProvider;
+
 use Vluzrmos\SlackApi\Methods\Channel;
+use Vluzrmos\SlackApi\Methods\Group;
 use Vluzrmos\SlackApi\Methods\Chat;
+use Vluzrmos\SlackApi\Methods\InstantMessage;
+use Vluzrmos\SlackApi\Methods\Search;
+
 
 class SlackApiServiceProvider extends ServiceProvider
 {
@@ -41,6 +46,18 @@ class SlackApiServiceProvider extends ServiceProvider
 
 		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackChat', function () {
 			return new Chat($this->app['slackapi']);
+		});
+
+		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackGroup', function () {
+			return new Group($this->app['slackapi']);
+		});
+
+		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackInstantMessage', function () {
+			return new InstantMessage($this->app['slackapi']);
+		});
+
+		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackSearch', function () {
+			return new Search($this->app['slackapi']);
 		});
     }
 
