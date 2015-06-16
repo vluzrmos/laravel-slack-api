@@ -95,7 +95,10 @@ SlackChannel::lists(); //all()
 SlackGroup::lists(); //all()
 
 //Invite a new member to your team
-SlackUserAdmin::invite("example@example.com", ['first_name' => 'John', 'last_name' => 'Doe']);
+SlackUserAdmin::invite("example@example.com", [
+    'first_name' => 'John', 
+    'last_name' => 'Doe'
+]);
 
 //Send a message to someone or channel or group
 SlackChat::message('#general', 'Hello my friends!');
