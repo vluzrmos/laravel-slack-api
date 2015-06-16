@@ -50,15 +50,18 @@ Add that line on <code>bootstrap/app.php</code>
    $app->register('Vluzrmos\SlackApi\SlackApiServiceProvider');
 ```
 
-If you want to use the facade, add this lines on <code>bootstrap/app.php</code>
+If you want to use facades, add this lines on <code>bootstrap/app.php</code>
 ```php
 class_alias('Vluzrmos\SlackApi\Facades\SlackApi', 'SlackApi');
 class_alias('Vluzrmos\SlackApi\Facades\SlackChannel', 'SlackChannel');
 class_alias('Vluzrmos\SlackApi\Facades\SlackChat', 'SlackChat');
-//...
+class_alias('Vluzrmos\SlackApi\Facades\SlackGroup', 'SlackGroup');
+class_alias('Vluzrmos\SlackApi\Facades\SlackUser', 'SlackUser');
+class_alias('Vluzrmos\SlackApi\Facades\SlackTeam', 'SlackTeam');
+//... and others
 ```
 
-Otherwise, just use the singleton:
+Otherwise, just use the singleton shortcuts:
 
 ```php
 $slackapi     = app('slack.api');
