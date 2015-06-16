@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 class SlackFile extends Facade
 {
-  /**
+    /**
    * @return string
    */
   protected static function getFacadeAccessor()

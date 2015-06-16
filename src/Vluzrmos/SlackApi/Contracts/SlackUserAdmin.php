@@ -2,8 +2,7 @@
 
 namespace Vluzrmos\SlackApi\Contracts;
 
-
 interface SlackUserAdmin
 {
-	public function invite($email, $options = []);
+    public function invite($email, $options = []);
 }

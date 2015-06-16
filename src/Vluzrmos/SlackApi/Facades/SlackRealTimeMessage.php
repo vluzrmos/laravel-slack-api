@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 class SlackRealTimeMessage extends Facade
 {
-  /**
+    /**
    * @return string
    */
   protected static function getFacadeAccessor()

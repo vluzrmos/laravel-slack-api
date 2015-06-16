@@ -122,31 +122,33 @@ class SlackApi implements Contract
 
 
 
-	/**
-	 * Loads an Slack Method by its contract short name
-	 *
-	 * @param $method
-	 *
-	 * @example $slack->load('Channel')->lists()
-	 *
-	 * @return mixed
-	 */
-	public function load($method){
-		$contract = __NAMESPACE__."\\Contracts\\Slack{$method}";
+    /**
+     * Loads an Slack Method by its contract short name
+     *
+     * @param $method
+     *
+     * @example $slack->load('Channel')->lists()
+     *
+     * @return mixed
+     */
+    public function load($method)
+    {
+        $contract = __NAMESPACE__."\\Contracts\\Slack{$method}";
 
-		return app($contract);
-	}
+        return app($contract);
+    }
 
-	/**
-	 * Alias to ::load
-	 *
-	 * @param $method
-	 *
-	 * @return mixed
-	 */
-	public function __invoke($method){
-		return $this->load($method);
-	}
+    /**
+     * Alias to ::load
+     *
+     * @param $method
+     *
+     * @return mixed
+     */
+    public function __invoke($method)
+    {
+        return $this->load($method);
+    }
 
     /**
      * Set the token of your slack team member (be sure is admin token).
@@ -176,24 +178,24 @@ class SlackApi implements Contract
         $this->client->setDefaultOption('verify', false);
     }
 
-	/**
-	 * Performs an HTTP Request
-	 * @param string $verb HTTP Verb
-	 * @param string $url Url to the request
-	 * @param array  $parameters parameters to send
-	 *
-	 * @return array
-	 */
-	protected function http($verb = 'get', $url = '', $parameters = [])
-	{
-		/** @var  \GuzzleHttp\Message\Response $response */
-		$response = $this->getHttpClient()->$verb($url, $parameters);
+    /**
+     * Performs an HTTP Request
+     * @param string $verb HTTP Verb
+     * @param string $url Url to the request
+     * @param array  $parameters parameters to send
+     *
+     * @return array
+     */
+    protected function http($verb = 'get', $url = '', $parameters = [])
+    {
+        /** @var  \GuzzleHttp\Message\Response $response */
+        $response = $this->getHttpClient()->$verb($url, $parameters);
 
-		/** @var  $contents */
-		$contents = $response->json();
+        /** @var  $contents */
+        $contents = $response->json();
 
-		return $contents;
-	}
+        return $contents;
+    }
 
     /**
      * Merge parameters of the request with token and timestamp string.
@@ -224,26 +226,25 @@ class SlackApi implements Contract
         return $this->client;
     }
 
-	/**
-	 * Generate the url with the api $method.
-	 *
-	 * @param null $method
-	 *
-	 * @return string
-	 */
-	protected function getUrl($method = null)
-	{
-		return str_finish($this->url, '/').$method;
-	}
+    /**
+     * Generate the url with the api $method.
+     *
+     * @param null $method
+     *
+     * @return string
+     */
+    protected function getUrl($method = null)
+    {
+        return str_finish($this->url, '/').$method;
+    }
 
-	/**
-	 * Get the user token.
-	 *
-	 * @return null|string
-	 */
-	protected function getToken()
-	{
-		return $this->token;
-	}
-
+    /**
+     * Get the user token.
+     *
+     * @return null|string
+     */
+    protected function getToken()
+    {
+        return $this->token;
+    }
 }
