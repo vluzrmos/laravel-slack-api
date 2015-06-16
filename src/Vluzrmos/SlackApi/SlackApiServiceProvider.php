@@ -3,6 +3,8 @@
 namespace Vluzrmos\SlackApi;
 
 use Illuminate\Support\ServiceProvider;
+use Vluzrmos\SlackApi\Methods\Channel;
+use Vluzrmos\SlackApi\Methods\Chat;
 
 class SlackApiServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,14 @@ class SlackApiServiceProvider extends ServiceProvider
         $this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackApi', function () {
             return $this->app['slackapi'];
         });
+
+		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackChannel', function () {
+			return new Channel($this->app['slackapi']);
+		});
+
+		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackChat', function () {
+			return new Chat($this->app['slackapi']);
+		});
     }
 
     /**

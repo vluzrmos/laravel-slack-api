@@ -48,7 +48,13 @@ class SlackApi implements Contract
      */
     protected function method($method = 'get', $url = '', $parameters = [])
     {
-        return json_decode(($this->getClient()->$method($url, $parameters)->getBody()->getContents()), true);
+		/** @var  \GuzzleHttp\Message\Response $response */
+		$response = $this->getHttpClient()->$method($url, $parameters);
+
+		/** @var  $contents */
+		$contents = $response->json();
+
+        return $contents;
     }
 
     /**
@@ -182,7 +188,7 @@ class SlackApi implements Contract
     }
 
     /**
-     * Merge parameters of the request with token em timestamp string.
+     * Merge parameters of the request with token and timestamp string.
      *
      * @param $parameters
      *
@@ -205,8 +211,10 @@ class SlackApi implements Contract
      *
      * @return Client
      */
-    public function getClient()
+    protected function getHttpClient()
     {
         return $this->client;
     }
+
+
 }
