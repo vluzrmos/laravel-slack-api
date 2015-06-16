@@ -13,10 +13,12 @@ class File extends AbstractMethod implements SlackFile
 	 * This method deletes a file from your team.
 	 *
 	 * @param string $file ID of file to delete.
+	 *
+	 * @return array
 	 */
 	public function delete($file)
 	{
-		$this->method('delete', compact('file'));
+		return $this->method('delete', compact('file'));
 	}
 
 	/**
