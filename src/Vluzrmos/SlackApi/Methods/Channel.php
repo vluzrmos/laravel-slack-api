@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackChannel;
 
 class Channel extends AbstractMethod implements SlackChannel
 {
-	protected $methodPrefix = "channels.";
+	protected $methodsGroup = "channels.";
 
 	/**
 	 * This method archives a channel.

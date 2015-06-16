@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vluzrmos
- * Date: 15/06/15
- * Time: 23:00
- */
 
 namespace Vluzrmos\SlackApi\Methods;
 
@@ -13,7 +7,7 @@ use Vluzrmos\SlackApi\Contracts\SlackGroup;
 
 class Group extends Channel implements SlackGroup
 {
-	protected $methodPrefix = "groups.";
+	protected $methodsGroup = "groups.";
 
 	/**
 	 * This method opens a private group.

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vluzrmos
- * Date: 15/06/15
- * Time: 23:31
- */
 
 namespace Vluzrmos\SlackApi\Contracts;
 

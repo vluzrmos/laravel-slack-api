@@ -9,7 +9,7 @@ use Vluzrmos\SlackApi\Methods\Group;
 use Vluzrmos\SlackApi\Methods\Chat;
 use Vluzrmos\SlackApi\Methods\InstantMessage;
 use Vluzrmos\SlackApi\Methods\Search;
-
+use Vluzrmos\SlackApi\Methods\File;
 
 class SlackApiServiceProvider extends ServiceProvider
 {
@@ -58,6 +58,10 @@ class SlackApiServiceProvider extends ServiceProvider
 
 		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackSearch', function () {
 			return new Search($this->app['slackapi']);
+		});
+
+		$this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackFile', function () {
+			return new File($this->app['slackapi']);
 		});
     }
 

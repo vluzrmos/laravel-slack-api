@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vluzrmos
- * Date: 15/06/15
- * Time: 23:58
- */
 
 namespace Vluzrmos\SlackApi\Methods;
 
@@ -14,7 +8,7 @@ use Vluzrmos\SlackApi\Contracts\SlackSearch;
 class Search extends AbstractMethod implements SlackSearch
 {
 
-	protected $methodPrefix = 'search.';
+	protected $methodsGroup = 'search.';
 
 	/**
 	 * This method allows you to search both messages and files in a single call.

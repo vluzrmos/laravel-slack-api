@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vluzrmos
- * Date: 15/06/15
- * Time: 22:10
- */
 
 namespace Vluzrmos\SlackApi\Methods;
 
@@ -17,7 +11,7 @@ class AbstractMethod
 	 * Prefix of the api methods to allow you to use short method names
 	 * @var string
 	 */
-	protected $methodPrefix = "api.";
+	protected $methodsGroup = "api.";
 
 	/**
 	 * @var \Vluzrmos\SlackApi\Contracts\SlackApi
@@ -39,7 +33,7 @@ class AbstractMethod
 	 * @return array
 	 */
 	public function method($method, $params = [], $http = "post"){
-		return call_user_func([$this->getApi(), $http], $this->methodPrefix.$method, $params);
+		return call_user_func([$this->getApi(), $http], $this->methodsGroup.$method, $params);
 	}
 
 	/**

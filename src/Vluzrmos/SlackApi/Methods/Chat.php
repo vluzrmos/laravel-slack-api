@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vluzrmos
- * Date: 15/06/15
- * Time: 22:08
- */
 
 namespace Vluzrmos\SlackApi\Methods;
 
@@ -14,7 +8,7 @@ use Vluzrmos\SlackApi\Contracts\SlackChat;
 class Chat extends AbstractMethod implements SlackChat
 {
 
-	protected $methodPrefix = "chat.";
+	protected $methodsGroup = "chat.";
 
 	/**
 	 * This method deletes a message from a channel.
