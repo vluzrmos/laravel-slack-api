@@ -9,7 +9,7 @@ if (!function_exists('slack')) {
      */
     function slack($method = null)
     {
-        $slack = app(\Vluzrmos\SlackApi\Contracts\SlackApi::class);
+        $slack = app('Vluzrmos\SlackApi\Contracts\SlackApi');
 
         return $method ? $slack->load($method) : $slack;
     }
