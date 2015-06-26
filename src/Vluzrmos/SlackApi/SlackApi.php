@@ -119,11 +119,8 @@ class SlackApi implements Contract
         return $this->http('patch', $url, $parameters);
     }
 
-
-
-
     /**
-     * Loads an Slack Method by its contract short name
+     * Loads an Slack Method by its contract short name.
      *
      * @param $method
      *
@@ -133,13 +130,21 @@ class SlackApi implements Contract
      */
     public function load($method)
     {
-        $contract = __NAMESPACE__."\\Contracts\\Slack{$method}";
+        if (str_contains($method, '.')) {
+            return app($method);
+        }
 
-        return app($contract);
+        $contract = __NAMESPACE__ . "\\Contracts\\Slack" . studly_case($method);
+
+        if (class_exists($contract)) {
+            return app($contract);
+        }
+
+        return app("slack." . snake_case($method));
     }
 
     /**
-     * Alias to ::load
+     * Alias to ::load.
      *
      * @param $method
      *
@@ -179,7 +184,7 @@ class SlackApi implements Contract
     }
 
     /**
-     * Performs an HTTP Request
+     * Performs an HTTP Request.
      * @param string $verb HTTP Verb
      * @param string $url Url to the request
      * @param array  $parameters parameters to send
@@ -229,13 +234,13 @@ class SlackApi implements Contract
     /**
      * Generate the url with the api $method.
      *
-     * @param null $method
+     * @param string|null $method
      *
      * @return string
      */
     protected function getUrl($method = null)
     {
-        return str_finish($this->url, '/').$method;
+        return str_finish($this->url, '/')  . $method;
     }
 
     /**

@@ -18,7 +18,10 @@
     "autoload": {
         "psr-4": {
             "Vluzrmos\\": "src/Vluzrmos/"
-        }
+        },
+        "files" : [
+            "src/SlackApi/helpers.php"
+        ]
     },
     "minimum-stability": "stable"
 }
