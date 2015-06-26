@@ -84,9 +84,23 @@ Otherwise, just use the singleton shortcuts:
 ```php
 <?php
 
+/** @var \Vluzrmos\SlackApi\Contracts\SlackApi $slackapi */
 $slackapi     = app('slack.api');
+
+/** @var \Vluzrmos\SlackApi\Contracts\SlackChat $slackchat */
 $slackchat    = app('slack.chat');
+
+/** @var \Vluzrmos\SlackApi\Contracts\SlackChannel $slackchannel */
 $slackchannel = app('slack.channel');
+
+//or 
+
+/** @var \Vluzrmos\SlackApi\Contracts\SlackApi $slackapi */
+$slackapi  = slack();
+
+/** @var \Vluzrmos\SlackApi\Contracts\SlackChat $slackchat */
+$slackchat = slack('chat'); // or slack('slack.chat')
+
 //...
 //...
 
