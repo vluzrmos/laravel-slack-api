@@ -119,6 +119,16 @@ SlackSearch::files('my file');
 
 // Search for messages
 SlackSearch::messages('my message');
+
+// or just use the helper
+
+//Autoload the api
+slack()->post('chat.postMessage', [...]);
+
+//Autoload a Slack Method
+slack('Chat')->message([...]);
+slack('Team')->info();
+
 ```
 
 ## Using Dependencie Injection

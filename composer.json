@@ -20,7 +20,7 @@
             "Vluzrmos\\": "src/Vluzrmos/"
         },
         "files" : [
-            "src/SlackApi/helpers.php"
+            "src/Vluzrmos/SlackApi/helpers.php"
         ]
     },
     "minimum-stability": "stable"
