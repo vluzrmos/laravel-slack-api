@@ -6,22 +6,30 @@ This package provides a simple way to use [Slack API](https://api.slack.com).
 
 ## Instalation 
 
-<code>composer require vluzrmos/slack-api</code>
+`composer require vluzrmos/slack-api`
 
 ## Instalation on Laravel 5
-Add to <code>config/app.php</code>
+Add to `config/app.php`:
 
 ```php
-'providers' => [
-    Vluzrmos\SlackApi\SlackApiServiceProvider::class,
+<?php 
+
+[
+    'providers' => [
+        Vluzrmos\SlackApi\SlackApiServiceProvider::class,
+    ]
 ]
+
+?>
 ```
 > The ::class notation is optional.
 
 
-and add the Facades to your aliases, if you need it:
+and add the Facades to your aliases, if you need it
 
 ```php
+<?php
+
 [
     'aliases' => [
         'SlackApi'              => Vluzrmos\SlackApi\Facades\SlackApi::class,
@@ -38,20 +46,28 @@ and add the Facades to your aliases, if you need it:
         'SlackTeam'             => Vluzrmos\SlackApi\Facades\SlackTeam::class,
     ]
 ]
+
+?>
 ```
 > The ::class notation is optional.
 
 ## Instalation on Lumen
 
-Add that line on <code>bootstrap/app.php</code>
-```php
-// $app->register('App\Providers\AppServiceProvider'); (by default that comes commented)
+Add that line on `bootstrap/app.php`:
 
-   $app->register('Vluzrmos\SlackApi\SlackApiServiceProvider');
+```php
+<?php 
+// $app->register('App\Providers\AppServiceProvider'); (by default that comes commented)
+$app->register('Vluzrmos\SlackApi\SlackApiServiceProvider');
+
+?>
 ```
 
 If you want to use facades, add this lines on <code>bootstrap/app.php</code>
+
 ```php
+<?php
+
 class_alias('Vluzrmos\SlackApi\Facades\SlackApi', 'SlackApi');
 class_alias('Vluzrmos\SlackApi\Facades\SlackChannel', 'SlackChannel');
 class_alias('Vluzrmos\SlackApi\Facades\SlackChat', 'SlackChat');
@@ -59,32 +75,46 @@ class_alias('Vluzrmos\SlackApi\Facades\SlackGroup', 'SlackGroup');
 class_alias('Vluzrmos\SlackApi\Facades\SlackUser', 'SlackUser');
 class_alias('Vluzrmos\SlackApi\Facades\SlackTeam', 'SlackTeam');
 //... and others
+
+?>
 ```
 
 Otherwise, just use the singleton shortcuts:
 
 ```php
+<?php
+
 $slackapi     = app('slack.api');
 $slackchat    = app('slack.chat');
 $slackchannel = app('slack.channel');
 //...
 //...
+
+?>
 ```
 
 ## Configuration
 
 configure your slack team token in <code>config/services.php</code> 
+
 ```php 
+<?php
+
 [
     //...,
     'slack' => [
         'token' => 'xop-sp-easeu-erahsuer-esrasher'
     ]
 ]
+
+?>
 ```
 
 ## Usage
+
 ```php
+<?php
+
 //Lists all users on your team
 SlackUser::lists(); //all()
 
@@ -129,6 +159,7 @@ slack()->post('chat.postMessage', [...]);
 slack('Chat')->message([...]);
 slack('Team')->info();
 
+?>
 ```
 
 ## Using Dependencie Injection
@@ -152,6 +183,8 @@ class YourController extends Controller{
         $usersList = $this->slackUser->lists();
     }
 }
+
+?>
 ```
 
 ## All Injectable Contracts:
@@ -165,6 +198,8 @@ Allows you to do generic requests to the api with the following http verbs:
 And is also possible load a SlackMethod contract:
 
 ```php
+<?php 
+
 /** @var SlackChannel $channel **/
 $channel = $slack->load('Channel');
 $channel->lists();
@@ -176,6 +211,8 @@ $chat->message('D98979F78', 'Hello my friend!');
 /** @var SlackUserAdmin $chat **/
 $admin = $slack('UserAdmin'); //Minimal syntax (invokable)
 $admin->invite('jhon.doe@example.com'); 
+
+?>
 ```
 
 ### Channels API
