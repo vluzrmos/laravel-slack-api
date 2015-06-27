@@ -216,6 +216,10 @@ class SlackApi implements Contract
             'token' => $this->getToken(),
         ];
 
+        if (isset($parameters['attachments']) and is_array($parameters['attachments'])) {
+            $parameters['attachments'] = json_encode($parameters['attachments']);
+        }
+
         $options['body'] = $parameters;
 
         return $options;
