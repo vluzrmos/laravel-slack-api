@@ -80,6 +80,6 @@ class InstantMessage extends SlackMethod implements SlackInstantMessage
      */
     public function open($user)
     {
-        return $this->method('close', compact('user'));
+        return $this->method('open', compact('user'));
     }
 }
