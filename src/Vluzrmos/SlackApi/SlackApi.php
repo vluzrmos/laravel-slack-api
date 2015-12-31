@@ -134,13 +134,13 @@ class SlackApi implements Contract
             return app($method);
         }
 
-        $contract = __NAMESPACE__ . "\\Contracts\\Slack" . studly_case($method);
+        $contract = __NAMESPACE__.'\\Contracts\\Slack'.studly_case($method);
 
         if (class_exists($contract)) {
             return app($contract);
         }
 
-        return app("slack." . snake_case($method));
+        return app('slack.'.snake_case($method));
     }
 
     /**
@@ -175,12 +175,14 @@ class SlackApi implements Contract
         if (is_callable($client)) {
             $this->client = value($client);
         } elseif (is_null($client) and is_null($this->client)) {
-            $this->client = new Client();
+            $this->client = new Client(['verify' => false]);
         } else {
             $this->client = $client;
         }
 
-        $this->client->setDefaultOption('verify', false);
+        if (method_exists($this->client, 'setDefaultOption')) {
+            $this->client->setDefaultOption('verify', false);
+        }
     }
 
     /**
@@ -193,13 +195,30 @@ class SlackApi implements Contract
      */
     protected function http($verb = 'get', $url = '', $parameters = [])
     {
-        /** @var  \GuzzleHttp\Message\Response $response */
-        $response = $this->getHttpClient()->$verb($url, $parameters);
+        /* @var  \GuzzleHttp\Psr7\Response|\GuzzleHttp\Message\Response $response */
+        try {
+            $response = $this->getHttpClient()->$verb($url, $parameters);
+        } catch (\InvalidArgumentException $e) {
+            $parameters['body'] = $parameters['form_params'];
+
+            unset($parameters['form_params']);
+
+            $response = $this->getHttpClient()->$verb($url, $parameters);
+        }
 
         /** @var  $contents */
-        $contents = $response->json();
+        $contents = $this->responseToJson($response);
 
         return $contents;
+    }
+
+    /**
+     * @param \GuzzleHttp\Psr7\Response|\GuzzleHttp\Message\Response $response
+     * @return array
+     */
+    protected function responseToJson($response)
+    {
+        return json_decode($response->getBody()->getContents());
     }
 
     /**
@@ -220,7 +239,7 @@ class SlackApi implements Contract
             $parameters['attachments'] = json_encode($parameters['attachments']);
         }
 
-        $options['body'] = $parameters;
+        $options['form_params'] = $parameters;
 
         return $options;
     }
@@ -244,7 +263,7 @@ class SlackApi implements Contract
      */
     protected function getUrl($method = null)
     {
-        return str_finish($this->url, '/')  . $method;
+        return str_finish($this->url, '/').$method;
     }
 
     /**

@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackUser;
 
 class User extends SlackMethod implements SlackUser
 {
-    protected $methodsGroup = "users.";
+    protected $methodsGroup = 'users.';
 
     /**
      * This method lets you find out information about a user's presence.
@@ -46,7 +46,7 @@ class User extends SlackMethod implements SlackUser
     }
 
     /**
-     * Alias to lists
+     * Alias to lists.
      *
      * @return array
      */
@@ -80,7 +80,7 @@ class User extends SlackMethod implements SlackUser
     }
 
     /**
-     * Get an array of users id's by nicks
+     * Get an array of users id's by nicks.
      *
      * @param string|array $nicks
      * @param bool         $force force to reload the users list
@@ -93,11 +93,11 @@ class User extends SlackMethod implements SlackUser
     {
         $users = $this->cacheGet('list');
 
-        if (!$users || $force) {
+        if (! $users || $force) {
             $users = $this->cachePut('list', $this->lists(), $cacheMinutes);
         }
 
-        if (!is_array($nicks)) {
+        if (! is_array($nicks)) {
             $nicks = preg_split('/, ?/', $nicks);
         }
 
@@ -108,7 +108,7 @@ class User extends SlackMethod implements SlackUser
                 if ($this->isUserNick($user, $nick)) {
                     $usersIds[] = $user['id'];
                 } elseif ($this->isSlackbotNick($nick)) {
-                    $usersIds[] ='USLACKBOT';
+                    $usersIds[] = 'USLACKBOT';
                 }
             }
         }
@@ -117,7 +117,7 @@ class User extends SlackMethod implements SlackUser
     }
 
     /**
-     * Verify if a given nick is for the user
+     * Verify if a given nick is for the user.
      *
      * @param array $user
      * @param string $nick
@@ -132,7 +132,7 @@ class User extends SlackMethod implements SlackUser
     }
 
     /**
-     * Check if a given nick is for the slackbot
+     * Check if a given nick is for the slackbot.
      *
      * @param string $nick
      *
@@ -140,6 +140,6 @@ class User extends SlackMethod implements SlackUser
      */
     protected function isSlackbotNick($nick)
     {
-        return $nick == 'slackbot' or $nick=='@slackbot' or $nick == 'USLACKBOT';
+        return $nick == 'slackbot' or $nick == '@slackbot' or $nick == 'USLACKBOT';
     }
 }

@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackChat;
 
 class Chat extends SlackMethod implements SlackChat
 {
-    protected $methodsGroup = "chat.";
+    protected $methodsGroup = 'chat.';
 
     /**
      * This method deletes a message from a channel.
@@ -50,11 +50,11 @@ class Chat extends SlackMethod implements SlackChat
      */
     public function message($channel, $text, $options = [])
     {
-        return $this->method("postMessage", array_merge(compact('channel', 'text'), ['as_user' => !isset($options['username'])], $options));
+        return $this->method('postMessage', array_merge(compact('channel', 'text'), ['as_user' => ! isset($options['username'])], $options));
     }
 
     /**
-     * Alias to message()
+     * Alias to message().
      * @see https://api.slack.com/methods/chat.postMessage
      *
      * @param string $channel Channel to send message to. Can be a public channel, private group or IM channel. Can be an encoded ID, or a name.

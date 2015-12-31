@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackFile;
 
 class File extends SlackMethod implements SlackFile
 {
-    protected $methodsGroup = "files.";
+    protected $methodsGroup = 'files.';
 
     /**
      * This method deletes a file from your team.
@@ -54,7 +54,7 @@ class File extends SlackMethod implements SlackFile
     }
 
     /**
-     * Alias to lists
+     * Alias to lists.
      *
      * @param array $options
      *

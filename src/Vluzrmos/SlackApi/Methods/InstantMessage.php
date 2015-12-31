@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackInstantMessage;
 
 class InstantMessage extends SlackMethod implements SlackInstantMessage
 {
-    protected $methodsGroup = "im.";
+    protected $methodsGroup = 'im.';
 
     /**
      * This method closes a direct message channel.

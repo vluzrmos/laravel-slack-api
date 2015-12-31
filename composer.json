@@ -11,9 +11,9 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "illuminate/support": "5.0.*|5.1.*",
-        "illuminate/cache": "5.0.*|5.1.*",
-        "guzzlehttp/guzzle":"~4.0|~5.0"
+        "illuminate/support": "~5.0",
+        "illuminate/cache": "~5.0",
+        "guzzlehttp/guzzle":"~5.3|~6.0"
     },  
     "autoload": {
         "psr-4": {
@@ -23,5 +23,5 @@
             "src/Vluzrmos/SlackApi/helpers.php"
         ]
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }

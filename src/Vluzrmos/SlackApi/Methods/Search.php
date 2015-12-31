@@ -23,7 +23,7 @@ class Search extends SlackMethod implements SlackSearch
      *</pre>
      *@return array
      */
-    public function all($query, $sort="timestamp", $options = [])
+    public function all($query, $sort = 'timestamp', $options = [])
     {
         return $this->method('all', array_merge(compact('query', 'sort'), $options));
     }
@@ -43,7 +43,7 @@ class Search extends SlackMethod implements SlackSearch
      *</pre>
      *@return array
      */
-    public function files($query, $sort="timestamp", $options = [])
+    public function files($query, $sort = 'timestamp', $options = [])
     {
         return $this->method('files', array_merge(compact('query', 'sort'), $options));
     }
@@ -63,7 +63,7 @@ class Search extends SlackMethod implements SlackSearch
      *</pre>
      *@return array
      */
-    public function messages($query, $sort="timestamp", $options = [])
+    public function messages($query, $sort = 'timestamp', $options = [])
     {
         return $this->method('messages', array_merge(compact('query', 'sort'), $options));
     }

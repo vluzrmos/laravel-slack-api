@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackChannel;
 
 class Channel extends SlackMethod implements SlackChannel
 {
-    protected $methodsGroup = "channels.";
+    protected $methodsGroup = 'channels.';
 
     /**
      * This method archives a channel.
@@ -21,7 +21,7 @@ class Channel extends SlackMethod implements SlackChannel
     }
 
     /**
-     * This method crate a channel with a given name
+     * This method crate a channel with a given name.
      *
      * @param string $name Name of channel to create
      *
@@ -65,7 +65,6 @@ class Channel extends SlackMethod implements SlackChannel
         return $this->method('team', ['channel' => $channel]);
     }
 
-
     /**
      * This method is used to invite a user to a channel. The calling user must be a member of the channel.
      *
@@ -80,7 +79,6 @@ class Channel extends SlackMethod implements SlackChannel
     {
         return $this->method('invite', compact('channel', 'user'));
     }
-
 
     /**
      * This method is used to join a channel. If the channel does not exist, it is created.

@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackGroup;
 
 class Group extends Channel implements SlackGroup
 {
-    protected $methodsGroup = "groups.";
+    protected $methodsGroup = 'groups.';
 
     /**
      * This method opens a private group.
@@ -33,7 +33,7 @@ class Group extends Channel implements SlackGroup
     }
 
     /**
-     * This method takes an existing private group and performs the following steps:
+     * This method takes an existing private group and performs the following steps:.
      *
      * - Renames the existing group (from "example" to "example-archived").
      * - Archives the existing group.
