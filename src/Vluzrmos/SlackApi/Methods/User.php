@@ -103,10 +103,10 @@ class User extends SlackMethod implements SlackUser
 
         $usersIds = [];
 
-        foreach ($users['members'] as $user) {
+        foreach ($users->members as $user) {
             foreach ($nicks as $nick) {
                 if ($this->isUserNick($user, $nick)) {
-                    $usersIds[] = $user['id'];
+                    $usersIds[] = $user->id;
                 } elseif ($this->isSlackbotNick($nick)) {
                     $usersIds[] = 'USLACKBOT';
                 }
@@ -128,7 +128,7 @@ class User extends SlackMethod implements SlackUser
     {
         $nick = str_replace('@', '', $nick);
 
-        return $nick == $user['name'] || $nick == $user['id'];
+        return $nick == $user->name || $nick == $user->id;
     }
 
     /**
