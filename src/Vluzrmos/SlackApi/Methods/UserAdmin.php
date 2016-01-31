@@ -22,4 +22,46 @@ class UserAdmin extends SlackMethod implements SlackUserAdmin
             '_attempts' => 1,
         ], $options));
     }
+
+    /**
+     * Set a user account as inactive.
+     * @param string $user The user to set as inactive.
+     *
+     * @return array
+     */
+    public function setInactive($user = null){
+        return $this->method('setInactive', [
+            'user' => $user,
+            'set_active' => true,
+            '_attempts' => 1,
+        ]);
+    }
+
+    /**
+     * Set a user account as regular.
+     * @param string $user The user to set as regular.
+     *
+     * @return array
+     */
+    public function setRegular($user = null){
+        return $this->method('setRegular', [
+            'user' => $user,
+            'set_active' => true,
+            '_attempts' => 1,
+        ]);
+    }
+
+    /**
+     * Set a user account as admin.
+     * @param string $user The user to set as admin.
+     *
+     * @return array
+     */
+    public function setAdmin($user = null){
+        return $this->method('setAdmin', [
+            'user' => $user,
+            'set_active' => true,
+            '_attempts' => 1,
+        ]);
+    }
 }
