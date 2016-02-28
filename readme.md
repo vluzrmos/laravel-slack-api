@@ -178,7 +178,7 @@ slack('Team')->info();
 ?>
 ```
 
-## Using Dependencie Injection
+## Using Dependency Injection
 
 ```php
 <?php 
