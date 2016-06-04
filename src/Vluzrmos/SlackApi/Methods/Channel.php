@@ -62,7 +62,7 @@ class Channel extends SlackMethod implements SlackChannel
      */
     public function info($channel)
     {
-        return $this->method('team', ['channel' => $channel]);
+        return $this->method('info', ['channel' => $channel]);
     }
 
     /**
