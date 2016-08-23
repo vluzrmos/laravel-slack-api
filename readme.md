@@ -119,7 +119,7 @@ configure your slack team token in <code>config/services.php</code>
 [
     //...,
     'slack' => [
-        'token' => 'xop-sp-easeu-erahsuer-esrasher'
+        'token' => 'your token here'
     ]
 ]
 
