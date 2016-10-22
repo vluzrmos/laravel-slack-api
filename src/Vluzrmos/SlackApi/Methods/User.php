@@ -32,7 +32,7 @@ class User extends SlackMethod implements SlackUser
     {
         $user = $this->getUsersIDsByNicks($user);
 
-        return $this->method('info', ['user' => $user[0]]);
+        return $this->method('info', ['user' => isset($user[0]) ? $user[0]: null]);
     }
 
     /**
