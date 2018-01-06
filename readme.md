@@ -6,7 +6,7 @@ This package provides a simple way to use [Slack API](https://api.slack.com).
 
 [![Latest Stable Version](https://poser.pugx.org/vluzrmos/slack-api/v/stable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Total Downloads](https://poser.pugx.org/vluzrmos/slack-api/downloads.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Latest Unstable Version](https://poser.pugx.org/vluzrmos/slack-api/v/unstable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![License](https://poser.pugx.org/vluzrmos/slack-api/license.svg)](https://packagist.org/packages/vluzrmos/slack-api)
 
-## Instalation 
+## Instalation
 
 `composer require vluzrmos/slack-api`
 
@@ -14,7 +14,7 @@ This package provides a simple way to use [Slack API](https://api.slack.com).
 Add to `config/app.php`:
 
 ```php
-<?php 
+<?php
 
 [
     'providers' => [
@@ -58,7 +58,7 @@ and add the Facades to your aliases, if you need it
 Add that line on `bootstrap/app.php`:
 
 ```php
-<?php 
+<?php
 // $app->register('App\Providers\AppServiceProvider'); (by default that comes commented)
 $app->register('Vluzrmos\SlackApi\SlackApiServiceProvider');
 
@@ -95,7 +95,7 @@ $slackchat    = app('slack.chat');
 /** @var \Vluzrmos\SlackApi\Contracts\SlackChannel $slackchannel */
 $slackchannel = app('slack.channel');
 
-//or 
+//or
 
 /** @var \Vluzrmos\SlackApi\Contracts\SlackApi $slackapi */
 $slackapi  = slack();
@@ -111,19 +111,10 @@ $slackchat = slack('chat'); // or slack('slack.chat')
 
 ## Configuration
 
-configure your slack team token in <code>config/services.php</code> 
+configure your slack team token in <code>.env</code>
 
-```php 
-<?php
-
-[
-    //...,
-    'slack' => [
-        'token' => 'your token here'
-    ]
-]
-
-?>
+```env 
+SLACK_TOKEN=slack.token
 ```
 
 ## Usage
@@ -142,7 +133,7 @@ SlackGroup::lists(); //all()
 
 //Invite a new member to your team
 SlackUserAdmin::invite("example@example.com", [
-    'first_name' => 'John', 
+    'first_name' => 'John',
     'last_name' => 'Doe'
 ]);
 
@@ -151,8 +142,8 @@ SlackChat::message('#general', 'Hello my friends!');
 
 //Upload a file/snippet
 SlackFile::upload([
-    'filename' => 'sometext.txt', 
-    'title' => 'text', 
+    'filename' => 'sometext.txt',
+    'title' => 'text',
     'content' => 'Nice contents',
     'channels' => 'C0440SZU6' //can be channel, users, or groups ID
 ]);
@@ -181,20 +172,20 @@ slack('Team')->info();
 ## Using Dependency Injection
 
 ```php
-<?php 
+<?php
 
 namespace App\Http\Controllers;    
-    
+
 use Vluzrmos\SlackApi\Contracts\SlackUser;
 
 class YourController extends Controller{
     /** @var  SlackUser */
     protected $slackUser;
-    
+
     public function __construct(SlackUser as $slackUser){
         $this->slackUser = $slackUser;   
     }
-    
+
     public function controllerMethod(){
         $usersList = $this->slackUser->lists();
     }
@@ -214,7 +205,7 @@ Allows you to do generic requests to the api with the following http verbs:
 And is also possible load a SlackMethod contract:
 
 ```php
-<?php 
+<?php
 
 /** @var SlackChannel $channel **/
 $channel = $slack->load('Channel');
@@ -226,7 +217,7 @@ $chat->message('D98979F78', 'Hello my friend!');
 
 /** @var SlackUserAdmin $chat **/
 $admin = $slack('UserAdmin'); //Minimal syntax (invokable)
-$admin->invite('jhon.doe@example.com'); 
+$admin->invite('jhon.doe@example.com');
 
 ?>
 ```

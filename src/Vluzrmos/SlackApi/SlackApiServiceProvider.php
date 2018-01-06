@@ -60,7 +60,7 @@ class SlackApiServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackApi', function () {
-            $api = new SlackApi(null, config('services.slack.token'));
+            $api = new SlackApi(null, env('SLACK_TOKEN'));
 
             return $api;
         });
