@@ -1,5 +1,5 @@
 {
-    "name": "vluzrmos/slack-api-forked",
+    "name": "provectus/slack-api-forked",
     "description": "Wrapper for Slack.com WEB API.",
     "license": "DBAD",
     "keywords":["Laravel", "Lumen", "Slack"],
@@ -7,6 +7,10 @@
         {
             "name": "Vagner do Carmo",
             "email": "vluzrmos@gmail.com"
+        },
+        {
+            "name": "Stgalkin",
+            "email": "stgalkin.stgalkin@gmail.com"
         }
     ],
     "require": {
@@ -17,10 +21,10 @@
     },  
     "autoload": {
         "psr-4": {
-            "Vluzrmos\\": "src/Vluzrmos/"
+            "Vluzrmos\\": "src/Provectus/"
         },
         "files" : [
-            "src/Vluzrmos/SlackApi/helpers.php"
+            "src/Provectus/SlackApi/helpers.php"
         ]
     },
     "minimum-stability": "dev"
