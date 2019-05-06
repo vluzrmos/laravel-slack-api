@@ -1,12 +1,13 @@
 {
     "name": "trisk/slack-api-forked",
-    "description": "Wrapper for Slack.com WEB API.",
-    "license": "DBAD",
+    "description": "Wrapper for Slack.com WEB API. Based on code from Vagner do Carmo.",
+    "license": "MIT",
     "keywords":["Laravel", "Lumen", "Slack"],
     "authors": [
         {
             "name": "Vagner do Carmo",
-            "email": "vluzrmos@gmail.com"
+            "email": "vluzrmos@gmail.com",
+            "role": "Original author"
         },
         {
             "name": "Stgalkin",
