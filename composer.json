@@ -1,5 +1,5 @@
 {
-    "name": "vluzrmos/slack-api",
+    "name": "vluzrmos/slack-api-forked",
     "description": "Wrapper for Slack.com WEB API.",
     "license": "DBAD",
     "keywords":["Laravel", "Lumen", "Slack"],

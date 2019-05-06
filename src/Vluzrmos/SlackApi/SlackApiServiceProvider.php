@@ -4,6 +4,11 @@ namespace Vluzrmos\SlackApi;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class SlackApiServiceProvider
+ *
+ * @package Vluzrmos\SlackApi
+ */
 class SlackApiServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +24,7 @@ class SlackApiServiceProvider extends ServiceProvider
      */
     protected $methods = [
         'Channel',
+        'Conversations',
         'Group',
         'Chat',
         'InstantMessage',
