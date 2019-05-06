@@ -14,7 +14,7 @@ interface SlackConversation
      * @param int $limit default=100
      * @param array $types   of available types : [public_channel,private_channel]
      *
-     * @return mixed
+     * @return array
      */
     public function lists($exclude_archived, $types, $limit = 100);
 }

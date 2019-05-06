@@ -9,7 +9,7 @@ use Trisk\SlackApi\Contracts\SlackConversation;
  *
  * @package Trisk\SlackApi\Methods
  */
-class Conversations extends SlackMethod implements SlackConversation
+class Conversation extends SlackMethod implements SlackConversation
 {
     protected $methodsGroup = 'conversations.';
 
@@ -22,9 +22,9 @@ class Conversations extends SlackMethod implements SlackConversation
      * @param string   $types
      * @param int $limit
      *
-     * @return void
+     * @return array
      */
-    public function lists($exclude_archived, $types = 'public_channel,private_channel', $limit = 100)
+    public function lists($exclude_archived = 1, $types = 'public_channel,private_channel', $limit = 100)
     {
         return $this->method('list', compact(['exclude_archived', 'types', 'limit']));
     }
