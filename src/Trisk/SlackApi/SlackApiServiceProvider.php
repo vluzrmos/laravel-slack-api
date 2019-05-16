@@ -92,6 +92,9 @@ class SlackApiServiceProvider extends ServiceProvider
         return ['slack.api'];
     }
 
+    /**
+     * @param $name
+     */
     public function registerSlackMethod($name)
     {
         $contract = str_finish($this->contractsNamespace, '\\')."Slack{$name}";

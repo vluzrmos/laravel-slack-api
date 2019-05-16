@@ -2,31 +2,44 @@
 
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackTeam;
+use Trisk\SlackApi\Contracts\TeamContract;
+use Trisk\SlackApi\Response\TeamResponse;
 
-class Team extends SlackMethod implements SlackTeam
+/**
+ * Class Team
+ *
+ * @package Trisk\SlackApi\Methods
+ */
+class Team extends SlackMethod implements TeamContract
 {
+    /**
+     * @var string
+     */
     protected $methodsGroup = 'team.';
 
     /**
-     * This method provides information about your team.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function info()
+    public function info(): TeamResponse
     {
-        return $this->method('info');
+        return $this->arrayToResponse($this->method('info'));
     }
 
     /**
-     * This method is used to get the access logs for users on a team.
-     *
-     * @param array $options ['count' => 100, 'page' => 1]
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function accessLogs($options = [])
+    public function accessLogs(array $options = []): TeamResponse
     {
-        return $this->method('accessLogs', $options);
+        return $this->arrayToResponse($this->method('accessLogs', $options));
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return TeamResponse
+     */
+    private function arrayToResponse(array $response): TeamResponse
+    {
+        return new TeamResponse($response);
     }
 }

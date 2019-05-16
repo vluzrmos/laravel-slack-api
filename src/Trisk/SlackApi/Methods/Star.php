@@ -7,34 +7,33 @@
  */
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackStar;
+use Trisk\SlackApi\Contracts\StarContract;
+use Trisk\SlackApi\Response\StarResponse;
 
-class Star extends SlackMethod implements SlackStar
+/**
+ * Class Star
+ *
+ * @package Trisk\SlackApi\Methods
+ */
+class Star extends SlackMethod implements StarContract
 {
+    /**
+     * @var string
+     */
     protected $methodsGroup = 'stars.';
 
     /**
-     * This method lists the items starred by a user.
-     *
-     * @param string $user Show stars by this user. Defaults to the authed user
-     * @param array  $options ['count' => 100, 'page' = 1]
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function lists($user = null, $options = [])
+    public function lists(?string $user = null, array $options = []): StarResponse
     {
-        return $this->method('list', array_merge(['user' => $user], $options));
+        return new StarResponse($this->method('list', array_merge(['user' => $user], $options)));
     }
 
     /**
-     * Alias to lists.
-     *
-     * @param null  $user Show stars by this user. Defaults to the authed user
-     * @param array $options ['count' => 100, 'page' = 1]
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function all($user = null, $options = [])
+    public function all(?string $user = null, array $options = []): StarResponse
     {
         return $this->lists($user, $options);
     }

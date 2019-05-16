@@ -2,20 +2,25 @@
 
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackUserAdmin;
+use Trisk\SlackApi\Contracts\UserAdminContract;
+use Trisk\SlackApi\Response\SlackResponse;
 
-class UserAdmin extends SlackMethod implements SlackUserAdmin
+/**
+ * Class UserAdmin
+ *
+ * @package Trisk\SlackApi\Methods
+ */
+class UserAdmin extends SlackMethod implements UserAdminContract
 {
+    /**
+     * @var string
+     */
     protected $methodsGroup = 'users.admin.';
 
     /**
-     * Invite a new user for a team.
-     * @param string $email email of the new user
-     * @param array  $options ['first_name' => 'John', 'last_name' => 'Doe', 'channels' => 'ch1,ch2,ch3 ...']
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function invite($email, $options = [])
+    public function invite(string $email, array $options = []): SlackResponse
     {
         return $this->method('invite', array_merge([
             'email' => $email,
@@ -24,26 +29,10 @@ class UserAdmin extends SlackMethod implements SlackUserAdmin
     }
 
     /**
-     * Set a user account as inactive.
-     * @param string $user The user to set as inactive.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function setInactive($user = null){
-        return $this->method('setInactive', [
-            'user' => $user,
-            'set_active' => true,
-            '_attempts' => 1,
-        ]);
-    }
-
-    /**
-     * Set a user account as regular.
-     * @param string $user The user to set as regular.
-     *
-     * @return array
-     */
-    public function setRegular($user = null){
+    public function setRegular(?string $user = null): SlackResponse
+    {
         return $this->method('setRegular', [
             'user' => $user,
             'set_active' => true,
@@ -52,16 +41,36 @@ class UserAdmin extends SlackMethod implements SlackUserAdmin
     }
 
     /**
-     * Set a user account as admin.
-     * @param string $user The user to set as admin.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function setAdmin($user = null){
+    public function setAdmin(?string $user = null): SlackResponse
+    {
         return $this->method('setAdmin', [
             'user' => $user,
             'set_active' => true,
             '_attempts' => 1,
         ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setInactive(?string $user = null): SlackResponse
+    {
+        return $this->method('setInactive', [
+            'user' => $user,
+            'set_active' => true,
+            '_attempts' => 1,
+        ]);
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return SlackResponse
+     */
+    private function arrayToResponse(array $response): SlackResponse
+    {
+        return new SlackResponse($response);
     }
 }

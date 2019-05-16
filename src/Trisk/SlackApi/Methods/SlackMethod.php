@@ -2,9 +2,14 @@
 
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackApi;
+use Trisk\SlackApi\Contracts\ApiContract;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
+/**
+ * Class SlackMethod
+ *
+ * @package Trisk\SlackApi\Methods
+ */
 abstract class SlackMethod
 {
     /**
@@ -14,7 +19,7 @@ abstract class SlackMethod
     protected $methodsGroup = 'api.';
 
     /**
-     * @var \Trisk\SlackApi\Contracts\SlackApi
+     * @var ApiContract
      */
     protected $api;
 
@@ -23,13 +28,16 @@ abstract class SlackMethod
      */
     protected $cache;
 
-    protected $cachePrefix = '__vlz_slackc_';
+    /**
+     * @var string
+     */
+    protected $cachePrefix = '__trisk_slackc_';
 
     /**
-     * @param \Trisk\SlackApi\Contracts\SlackApi  $api
+     * @param ApiContract  $api
      * @param Cache $cache
      */
-    public function __construct(SlackApi $api, Cache $cache)
+    public function __construct(ApiContract $api, Cache $cache)
     {
         $this->api = $api;
         $this->cache = $cache;
@@ -44,16 +52,16 @@ abstract class SlackMethod
      *
      * @return array
      */
-    public function method($method, $params = [], $http = 'post')
+    public function method($method, $params = [], $http = 'post'): array
     {
         return call_user_func([$this->getApi(), $http], $this->methodsGroup.$method, $params);
     }
 
     /**
      * Returns the api.
-     * @return \Trisk\SlackApi\Contracts\SlackApi
+     * @return ApiContract
      */
-    public function getApi()
+    public function getApi(): ApiContract
     {
         return $this->api;
     }

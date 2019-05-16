@@ -2,20 +2,28 @@
 
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackRealTimeMessage;
+use Trisk\SlackApi\Contracts\RealTimeMessageContract;
+use Trisk\SlackApi\Response\SlackResponse;
 
-class RealTimeMessage extends SlackMethod implements SlackRealTimeMessage
+/**
+ * Class RealTimeMessage
+ *
+ * @package Trisk\SlackApi\Methods
+ *
+ * @deprecated
+ */
+class RealTimeMessage extends SlackMethod implements RealTimeMessageContract
 {
+    /**
+     * @var string
+     */
     protected $methodsGroup = 'rtm.';
 
     /**
-     * This method starts a Real Time Messaging API session.
-     * Refer to the RTM API documentation for full details on how to use the RTM API.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function start()
+    public function start(): SlackResponse
     {
-        return $this->method('start');
+        return new SlackResponse($this->method('start'));
     }
 }

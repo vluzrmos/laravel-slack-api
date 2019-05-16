@@ -2,84 +2,81 @@
 
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackUser;
+use Illuminate\Support\Arr;
+use Trisk\SlackApi\Contracts\UserContract;
+use Trisk\SlackApi\Response\UserResponse;
 
-class User extends SlackMethod implements SlackUser
+/**
+ * Class User
+ *
+ * @package Trisk\SlackApi\Methods
+ */
+class User extends SlackMethod implements UserContract
 {
+    const BOT_NAMES = [
+        'slackbot',
+        '@slackbot',
+        'USLACKBOT',
+    ];
+
+    /**
+     * @var string
+     */
     protected $methodsGroup = 'users.';
 
     /**
-     * This method lets you find out information about a user's presence.
-     * Consult the presence documentation for more details.
-     *
-     * @param string $user User ID to get presence info on. Defaults to the authed user.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function getPresence($user)
+    public function info(string $user): UserResponse
     {
-        return $this->method('getPresence', compact('user'));
+        $user = $this->_usersIDsByNicks($user);
+
+        return $this->arrayToResponse($this->method('info', ['user' => isset($user[0]) ? $user[0]: null]));
     }
 
     /**
-     * This method returns information about a team member.
-     *
-     * @param string $user User to get info on
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function info($user)
+    public function lists(): UserResponse
     {
-        $user = $this->getUsersIDsByNicks($user);
-
-        return $this->method('info', ['user' => isset($user[0]) ? $user[0]: null]);
+        return $this->arrayToResponse($this->method('list'));
     }
 
     /**
-     * This method returns a list of all users in the team. This includes deleted/deactivated users.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function lists()
-    {
-        return $this->method('list');
-    }
-
-    /**
-     * Alias to lists.
-     *
-     * @return array
-     */
-    public function all()
+    public function all(): UserResponse
     {
         return $this->lists();
     }
 
     /**
-     * This method lets the slack messaging server know that the authenticated user is currently active.
-     * Consult the presence documentation for more details.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function setActive()
+    public function setActive(): UserResponse
     {
-        return $this->method('setActive');
+        return $this->arrayToResponse($this->method('setActive'));
     }
 
     /**
-     * This method lets you set the calling user's manual presence.
-     * Consult the presence documentation for more details.
-     *
-     * @param $presence
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function setPresence($presence)
+    public function setPresence(string $presence): UserResponse
     {
-        return $this->method('setPresence', compact('presence'));
+        return $this->arrayToResponse($this->method('setPresence', compact('presence')));
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getPresence(string $user): UserResponse
+    {
+        return $this->arrayToResponse($this->method('getPresence', compact('user')));
+    }
+
+    /**
+     * TODO fix this
+     *
      * Get an array of users id's by nicks.
      *
      * @param string|array $nicks
@@ -89,31 +86,31 @@ class User extends SlackMethod implements SlackUser
      *
      * @return array
      */
-    public function getUsersIDsByNicks($nicks, $force = false,  $cacheMinutes = 1)
+    private function _usersIDsByNicks($nicks, $force = false,  $cacheMinutes = 1): array
     {
         $users = $this->cacheGet('list');
 
+        /** @var UserResponse $users */
         if (! $users || $force) {
             $users = $this->cachePut('list', $this->lists(), $cacheMinutes);
         }
-
         if (! is_array($nicks)) {
             $nicks = preg_split('/, ?/', $nicks);
         }
 
         $usersIds = [];
 
-        foreach ($users->members as $user) {
+        foreach ($users->members() as $user) {
             foreach ($nicks as $nick) {
                 if ($this->isUserNick($user, $nick)) {
-                    $usersIds[] = $user->id;
-                } elseif ($this->isSlackbotNick($nick)) {
+                    $usersIds[] = Arr::get($user, 'id');
+                } elseif ($this->isSlackBotNick($nick)) {
                     $usersIds[] = 'USLACKBOT';
                 }
             }
         }
 
-        return $usersIds;
+        return array_filter($usersIds);
     }
 
     /**
@@ -124,11 +121,12 @@ class User extends SlackMethod implements SlackUser
      *
      * @return bool
      */
-    protected function isUserNick($user, $nick)
+    protected function isUserNick(array $user, string $nick): bool
     {
         $nick = str_replace('@', '', $nick);
 
-        return $nick == $user->name || $nick == $user->id;
+        return $nick == \Illuminate\Support\Arr::get($user, 'name') ||
+            $nick == \Illuminate\Support\Arr::get($user, 'id');
     }
 
     /**
@@ -138,8 +136,18 @@ class User extends SlackMethod implements SlackUser
      *
      * @return bool
      */
-    protected function isSlackbotNick($nick)
+    protected function isSlackBotNick(string $nick)
     {
-        return $nick == 'slackbot' or $nick == '@slackbot' or $nick == 'USLACKBOT';
+        return in_array($nick, self::BOT_NAMES);
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return UserResponse
+     */
+    private function arrayToResponse(array $response): UserResponse
+    {
+        return new UserResponse($response);
     }
 }

@@ -4,9 +4,14 @@ namespace Trisk\SlackApi;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Traits\Macroable;
-use Trisk\SlackApi\Contracts\SlackApi as Contract;
+use Trisk\SlackApi\Contracts\ApiContract;
 
-class SlackApi implements Contract
+/**
+ * Class SlackApi
+ *
+ * @package Trisk\SlackApi
+ */
+class SlackApi implements ApiContract
 {
     use Macroable;
 
@@ -35,100 +40,60 @@ class SlackApi implements Contract
      */
     public function __construct(Client $client = null, $token = null)
     {
-        $this->setClient($client);
-        $this->setToken($token);
+        $this->setClient($client)
+            ->setToken($token);
     }
 
     /**
-     * Send a GET Request.
-     *
-     * @param       $apiMethod
-     * @param array $parameters
-     *
-     * @return \GuzzleHttp\Message\ResponseInterface
+     * @inheritdoc
      */
-    public function get($apiMethod, $parameters = [])
+    public function get(string $apiMethod, array $parameters = []): array
     {
-        $url = $this->getUrl($apiMethod);
-        $parameters = $this->mergeParameters($parameters);
-
-        return $this->http('get', $url, $parameters);
+        return $this->http('get', $this->getUrl($apiMethod), $this->mergeParameters($parameters));
     }
 
     /**
-     * Send a POST Request.
-     *
-     * @param       $apiMethod
-     * @param array $parameters
-     *
-     * @return \GuzzleHttp\Message\ResponseInterface
+     * @inheritdoc
      */
-    public function post($apiMethod, $parameters = [])
+    public function post(string $apiMethod, array $parameters = []): array
     {
-        $url = $this->getUrl($apiMethod);
-        $parameters = $this->mergeParameters($parameters);
-
-        return $this->http('post', $url, $parameters);
+        return $this->http('post', $this->getUrl($apiMethod), $this->mergeParameters($parameters));
     }
 
     /**
-     * Send a PUT Request.
-     *
-     * @param       $apiMethod
-     * @param array $parameters
-     *
-     * @return \GuzzleHttp\Message\ResponseInterface
+     * @inheritdoc
      */
-    public function put($apiMethod, $parameters = [])
+    public function put(string $apiMethod, array $parameters = []): array
     {
-        $url = $this->getUrl($apiMethod);
-        $parameters = $this->mergeParameters($parameters);
-
-        return $this->http('put', $url, $parameters);
+        return $this->http('put', $this->getUrl($apiMethod), $this->mergeParameters($parameters));
     }
 
     /**
-     * Send a DELETE Request.
-     *
-     * @param       $apiMethod
-     * @param array $parameters
-     *
-     * @return \GuzzleHttp\Message\ResponseInterface
+     * @inheritdoc
      */
-    public function delete($apiMethod, $parameters = [])
+    public function delete(string $apiMethod, array $parameters = []): array
     {
-        $url = $this->getUrl($apiMethod);
-        $parameters = $this->mergeParameters($parameters);
-
-        return $this->http('delete', $url, $parameters);
+        return $this->http('delete', $this->getUrl($apiMethod), $this->mergeParameters($parameters));
     }
 
     /**
-     * Send a PATCH Request.
-     *
-     * @param       $apiMethod
-     * @param array $parameters
-     *
-     * @return \GuzzleHttp\Message\ResponseInterface
+     * @inheritdoc
      */
-    public function patch($apiMethod, $parameters = [])
+    public function patch(string $apiMethod, array $parameters = []): array
     {
-        $url = $this->getUrl($apiMethod);
-        $parameters = $this->mergeParameters($parameters);
-
-        return $this->http('patch', $url, $parameters);
+        return $this->http('patch', $this->getUrl($apiMethod), $this->mergeParameters($parameters));
     }
 
     /**
      * Loads an Slack Method by its contract short name.
      *
-     * @param $method
+     * @param string $method
      *
      * @example $slack->load('Channel')->lists()
      *
      * @return mixed
      */
-    public function load($method)
+    public function load(string $method)
     {
         if (str_contains($method, '.')) {
             return app($method);
@@ -146,11 +111,11 @@ class SlackApi implements Contract
     /**
      * Alias to ::load.
      *
-     * @param $method
+     * @param string $method
      *
      * @return mixed
      */
-    public function __invoke($method)
+    public function __invoke(string $method)
     {
         return $this->load($method);
     }
@@ -158,19 +123,25 @@ class SlackApi implements Contract
     /**
      * Set the token of your slack team member (be sure is admin token).
      *
-     * @param $token
+     * @param string|null $token
+     *
+     * @return SlackApi
      */
-    public function setToken($token)
+    private function setToken(?string $token): SlackApi
     {
         $this->token = $token;
+
+        return $this;
     }
 
     /**
      * Configures the Guzzle Client.
      *
      * @param \GuzzleHttp\Client|Callback|null $client
+     *
+     * @return SlackApi
      */
-    public function setClient($client = null)
+    private function setClient(?\GuzzleHttp\Client $client = null): SlackApi
     {
         if (is_callable($client)) {
             $this->client = value($client);
@@ -183,6 +154,8 @@ class SlackApi implements Contract
         if (method_exists($this->client, 'setDefaultOption')) {
             $this->client->setDefaultOption('verify', false);
         }
+
+        return $this;
     }
 
     /**
@@ -193,9 +166,8 @@ class SlackApi implements Contract
      *
      * @return array
      */
-    protected function http($verb = 'get', $url = '', $parameters = [])
+    protected function http(string $verb = 'get', string $url = '', array $parameters = []): array
     {
-        /* @var  \GuzzleHttp\Psr7\Response|\GuzzleHttp\Message\Response $response */
         try {
             $response = $this->getHttpClient()->$verb($url, $parameters);
         } catch (\InvalidArgumentException $e) {
@@ -206,19 +178,18 @@ class SlackApi implements Contract
             $response = $this->getHttpClient()->$verb($url, $parameters);
         }
 
-        /** @var  $contents */
-        $contents = $this->responseToJson($response);
+        $contents = $this->responseToArray($response);
 
         return $contents;
     }
 
     /**
-     * @param \GuzzleHttp\Psr7\Response|\GuzzleHttp\Message\Response $response
+     * @param \GuzzleHttp\Psr7\Response $response
      * @return array
      */
-    protected function responseToJson($response)
+    protected function responseToArray(\GuzzleHttp\Psr7\Response $response): array
     {
-        return json_decode($response->getBody()->getContents());
+        return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
@@ -228,7 +199,7 @@ class SlackApi implements Contract
      *
      * @return array
      */
-    protected function mergeParameters($parameters = [])
+    protected function mergeParameters(array $parameters = []): array
     {
         $options['query'] = [
             't' => time(),
@@ -247,9 +218,9 @@ class SlackApi implements Contract
     /**
      * Get the Guzzle Client.
      *
-     * @return Client
+     * @return Client|null
      */
-    protected function getHttpClient()
+    protected function getHttpClient(): ?Client
     {
         return $this->client;
     }
@@ -261,7 +232,7 @@ class SlackApi implements Contract
      *
      * @return string
      */
-    protected function getUrl($method = null)
+    protected function getUrl($method = null): string
     {
         return str_finish($this->url, '/').$method;
     }
@@ -271,7 +242,7 @@ class SlackApi implements Contract
      *
      * @return null|string
      */
-    protected function getToken()
+    protected function getToken(): ?string
     {
         return $this->token;
     }

@@ -2,84 +2,76 @@
 
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackInstantMessage;
+use Trisk\SlackApi\Contracts\InstantMessageContract;
+use Trisk\SlackApi\Response\InstantMessageResponse;
 
-class InstantMessage extends SlackMethod implements SlackInstantMessage
+/**
+ * Class InstantMessage
+ *
+ * @package Trisk\SlackApi\Methods
+ */
+class InstantMessage extends SlackMethod implements InstantMessageContract
 {
+    /**
+     * @var string
+     */
     protected $methodsGroup = 'im.';
 
     /**
-     * This method closes a direct message channel.
-     *
-     * @param string $channel Direct message channel to close.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function close($channel)
+    public function close(string $channel): InstantMessageResponse
     {
-        return $this->method('close', compact('channel'));
+        return $this->arrayToResponse($this->method('close', compact('channel')));
     }
 
     /**
-     * This method returns a portion of messages/events from the specified channel.
-     * To read the entire history for a channel, call the method with no `latest` or `oldest` arguments,
-     * and then continue paging using the instructions below.
-     * @see https://api.slack.com/methods/channels.history
-     *
-     * @param string $channel Channel to fetch history for.
-     * @param int    $count Number of messages to return, between 1 and 1000.
-     * @param string $latest End of time range of messages to include in results.
-     * @param int|string    $oldest Start of time range of messages to include in results.
-     * @param int    $inclusive Include messages with latest or oldest timestamp in results.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function history($channel, $count = 100, $latest = null, $oldest = 0, $inclusive = 1)
+    public function history(string $channel, int $count, string $latest, string $oldest, int $inclusive): InstantMessageResponse
     {
-        return $this->method('history', compact('channel', 'count', 'latest', 'oldest', 'inclusive'));
+        return $this->arrayToResponse($this->method('history', compact('channel', 'count', 'latest', 'oldest', 'inclusive')));
     }
 
     /**
-     * This method returns a list of all im channels that the user has.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function lists()
+    public function lists(): InstantMessageResponse
     {
-        return $this->method('list');
+        return $this->arrayToResponse($this->method('list'));
     }
 
     /**
-     * This method returns a list of all im channels that the user has.
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function all()
+    public function all(): InstantMessageResponse
     {
-        return $this->method('list');
+        return $this->arrayToResponse($this->method('list'));
     }
 
     /**
-     * This method moves the read cursor in a direct message channel.
-     *
-     * @param string $channel
-     * @param int|string $ts
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function mark($channel, $ts)
+    public function mark(string $channel, string $ts): InstantMessageResponse
     {
-        return $this->method('mark', compact('channel', 'ts'));
+        return $this->arrayToResponse($this->method('mark', compact('channel', 'ts')));
     }
 
     /**
-     * This method opens a direct message channel with another member of your Slack team.
-     * @param string $user
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function open($user)
+    public function open(string $user): InstantMessageResponse
     {
-        return $this->method('open', compact('user'));
+        return $this->arrayToResponse($this->method('open', compact('user')));
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return InstantMessageResponse
+     */
+    private function arrayToResponse(array $response): InstantMessageResponse
+    {
+        return new InstantMessageResponse($response);
     }
 }

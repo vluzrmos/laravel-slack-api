@@ -2,69 +2,52 @@
 
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackSearch;
+use Trisk\SlackApi\Contracts\SearchContract;
+use Trisk\SlackApi\Response\SearchResponse;
 
-class Search extends SlackMethod implements SlackSearch
+/**
+ * Class Search
+ *
+ * @package Trisk\SlackApi\Methods
+ */
+class Search extends SlackMethod implements SearchContract
 {
+    /**
+     * @var string
+     */
     protected $methodsGroup = 'search.';
 
     /**
-     * This method allows you to search both messages and files in a single call.
-     *
-     * @param string $query
-     * @param string $sort
-     * @param array  $options <pre>
-     * [
-     *	 "sort_dir" => desc, //Change sort direction to ascending (asc) or descending (desc).
-     *   "highlight" => 1, //Pass a value of 1 to enable query highlight markers (see below).
-     *   "count" => 100, //Number of items to return per page.
-     *   "page" => 1 //Page number of results to return.
-     * ]
-     *</pre>
-     *@return array
+     * @inheritdoc
      */
-    public function all($query, $sort = 'timestamp', $options = [])
+    public function all(string $query, string $sort, array $options = []): SearchResponse
     {
-        return $this->method('all', array_merge(compact('query', 'sort'), $options));
+        return $this->arrayToResponse($this->method('all', array_merge(compact('query', 'sort'), $options)));
     }
 
     /**
-     * This method returns files matching a search query.
-     *
-     * @param string $query
-     * @param string $sort
-     * @param array  $options <pre>
-     * [
-     *	 "sort_dir" => desc, //Change sort direction to ascending (asc) or descending (desc).
-     *   "highlight" => 1, //Pass a value of 1 to enable query highlight markers (see below).
-     *   "count" => 100, //Number of items to return per page.
-     *   "page" => 1 //Page number of results to return.
-     * ]
-     *</pre>
-     *@return array
+     * @inheritdoc
      */
-    public function files($query, $sort = 'timestamp', $options = [])
+    public function files(string $query, string $sort, array $options = []): SearchResponse
     {
-        return $this->method('files', array_merge(compact('query', 'sort'), $options));
+        return $this->arrayToResponse($this->method('files', array_merge(compact('query', 'sort'), $options)));
     }
 
     /**
-     * This method returns messages matching a search query.
-     *
-     * @param string $query
-     * @param string $sort
-     * @param array  $options <pre>
-     * [
-     *	 "sort_dir" => desc, //Change sort direction to ascending (asc) or descending (desc).
-     *   "highlight" => 1, //Pass a value of 1 to enable query highlight markers (see below).
-     *   "count" => 100, //Number of items to return per page.
-     *   "page" => 1 //Page number of results to return.
-     * ]
-     *</pre>
-     *@return array
+     * @inheritdoc
      */
-    public function messages($query, $sort = 'timestamp', $options = [])
+    public function messages(string $query, string $sort, array $options = []): SearchResponse
     {
-        return $this->method('messages', array_merge(compact('query', 'sort'), $options));
+        return $this->arrayToResponse($this->method('messages', array_merge(compact('query', 'sort'), $options)));
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return SearchResponse
+     */
+    private function arrayToResponse(array $response): SearchResponse
+    {
+        return new SearchResponse($response);
     }
 }

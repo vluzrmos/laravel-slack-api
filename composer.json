@@ -15,9 +15,9 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "illuminate/support": "~5.0",
-        "illuminate/cache": "~5.0",
+        "php": ">=7.2",
+        "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*",
+        "illuminate/cache": "5.5.*|5.6.*|5.7.*|5.8.*",
         "guzzlehttp/guzzle":"~5.3|~6.0"
     },  
     "autoload": {

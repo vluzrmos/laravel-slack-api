@@ -4,6 +4,12 @@ namespace Trisk\SlackApi\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * Class SlackRealTimeMessage
+ *
+ * @package Trisk\SlackApi\Facades
+ * @deprecated
+ */
 class SlackRealTimeMessage extends Facade
 {
     /**

@@ -2,30 +2,36 @@
 
 namespace Trisk\SlackApi\Methods;
 
-use Trisk\SlackApi\Contracts\SlackConversation;
+use Trisk\SlackApi\Contracts\ConversationContract;
+use Trisk\SlackApi\Response\ChannelResponse;
 
 /**
  * Class Conversations
  *
  * @package Trisk\SlackApi\Methods
  */
-class Conversation extends SlackMethod implements SlackConversation
+class Conversation extends SlackMethod implements ConversationContract
 {
+    /**
+     * @var string
+     */
     protected $methodsGroup = 'conversations.';
 
     /**
-     * This method returns a list of all channels in the team with private and public
-     *
-     * @see https://api.slack.com/methods/conversations.list
-     *
-     * @param int $exclude_archived Don't return archived channels.
-     * @param string   $types
-     * @param int $limit
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function lists($exclude_archived = 1, $types = 'public_channel,private_channel', $limit = 100)
+    public function lists(int $exclude_archived = 1, string $types= 'public_channel,private_channel', int $limit = 100): ChannelResponse
     {
-        return $this->method('list', compact(['exclude_archived', 'types', 'limit']));
+        return $this->arrayToResponse($this->method('list', compact(['exclude_archived', 'types', 'limit'])));
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return ChannelResponse
+     */
+    private function arrayToResponse(array $response): ChannelResponse
+    {
+        return new ChannelResponse($response);
     }
 }
