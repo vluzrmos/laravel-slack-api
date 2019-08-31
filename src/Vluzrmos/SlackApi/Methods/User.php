@@ -67,6 +67,8 @@ class User extends SlackMethod implements SlackUser
     }
 
     /**
+     * This method return user info search by email
+     *
      * @param $email
      * @return array
      */
