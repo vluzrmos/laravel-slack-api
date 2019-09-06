@@ -67,6 +67,17 @@ class User extends SlackMethod implements SlackUser
     }
 
     /**
+     * This method return user info search by email
+     *
+     * @param $email
+     * @return array
+     */
+    public function lookupByEmail($email)
+    {
+        return $this->method('lookupByEmail', ['email' => $email]);
+    }
+
+    /**
      * This method lets you set the calling user's manual presence.
      * Consult the presence documentation for more details.
      *
