@@ -63,13 +63,13 @@ abstract class SlackMethod
      *
      * @param string $key
      * @param mixed  $value
-     * @param int    $minutes Default 1
+     * @param int    $seconds Default 60
      *
      * @return mixed
      */
-    public function cachePut($key, $value, $minutes = 1)
+    public function cachePut($key, $value, $seconds = 60)
     {
-        $this->cache->put($this->cachePrefix($key), $value, $minutes);
+        $this->cache->put($this->cachePrefix($key), $value, $seconds);
 
         return $value;
     }
@@ -77,14 +77,14 @@ abstract class SlackMethod
     /**
      * Remember the result value for a given closure.
      * @param $key
-     * @param $minutes
+     * @param $seconds
      * @param $callback
      *
      * @return mixed
      */
-    public function cacheRemember($key, $minutes, $callback)
+    public function cacheRemember($key, $seconds, $callback)
     {
-        return $this->cache->remember($this->cachePrefix($key), $minutes, $callback);
+        return $this->cache->remember($this->cachePrefix($key), $seconds, $callback);
     }
 
     /**
