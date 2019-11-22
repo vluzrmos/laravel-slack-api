@@ -3,6 +3,7 @@
 namespace Vluzrmos\SlackApi;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class SlackApiServiceProvider extends ServiceProvider
 {
@@ -55,7 +56,7 @@ class SlackApiServiceProvider extends ServiceProvider
     public function register()
     {
         /* Lumen autoload services configs */
-        if (str_contains($this->app->version(), 'Lumen')) {
+        if (Str::contains($this->app->version(), 'Lumen')) {
             $this->app->configure('services');
         }
 
@@ -88,9 +89,9 @@ class SlackApiServiceProvider extends ServiceProvider
 
     public function registerSlackMethod($name)
     {
-        $contract = str_finish($this->contractsNamespace, '\\')."Slack{$name}";
-        $shortcut = $this->shortcutPrefix.snake_case($name);
-        $class = str_finish($this->methodsNamespace, '\\').$name;
+        $contract = Str::finish($this->contractsNamespace, '\\') . "Slack{$name}";
+        $shortcut = $this->shortcutPrefix . Str::snake($name);
+        $class = Str::finish($this->methodsNamespace, '\\') . $name;
 
         $this->registerSlackSingletons($contract, $class, $shortcut);
     }
