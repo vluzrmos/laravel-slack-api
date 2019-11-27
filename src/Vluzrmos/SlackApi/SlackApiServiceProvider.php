@@ -76,6 +76,13 @@ class SlackApiServiceProvider extends ServiceProvider
         $this->app->alias('Vluzrmos\SlackApi\Contracts\SlackRealTimeMessage', 'slack.rtm');
     }
 
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/config/slack-api.php' => config_path('slack-api.php'),
+        ]);
+    }
+
     /**
      * Get the services provided by the provider.
      *
