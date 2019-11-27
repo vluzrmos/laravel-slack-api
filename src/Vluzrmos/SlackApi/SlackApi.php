@@ -218,7 +218,7 @@ class SlackApi implements Contract
      */
     protected function responseToJson($response)
     {
-        return json_decode($response->getBody()->getContents());
+        return json_decode($response->getBody()->getContents(), config('slack-api.response_to_assoc_array'));
     }
 
     /**
