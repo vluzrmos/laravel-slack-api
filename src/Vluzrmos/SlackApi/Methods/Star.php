@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vluzrmos
- * Date: 16/06/15
- * Time: 02:43.
- */
+
 namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackStar;

@@ -134,13 +134,13 @@ class SlackApi implements Contract
             return app($method);
         }
 
-        $contract = __NAMESPACE__.'\\Contracts\\Slack'.studly_case($method);
+        $contract = __NAMESPACE__ . '\\Contracts\\Slack' . studly_case($method);
 
         if (class_exists($contract)) {
             return app($contract);
         }
 
-        return app('slack.'.snake_case($method));
+        return app('slack.' . snake_case($method));
     }
 
     /**
@@ -263,7 +263,7 @@ class SlackApi implements Contract
      */
     protected function getUrl($method = null)
     {
-        return str_finish($this->url, '/').$method;
+        return str_finish($this->url, '/') . $method;
     }
 
     /**

@@ -55,7 +55,8 @@ class SlackApiServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/config/slack-api.php', 'slack-api'
+            __DIR__ . '/config/slack-api.php',
+            'slack-api'
         );
 
         /* Lumen autoload services configs */
@@ -83,7 +84,7 @@ class SlackApiServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config/slack-api.php' => config_path('slack-api.php'),
+            __DIR__ . '/config/slack-api.php' => config_path('slack-api.php'),
         ]);
     }
 
@@ -99,9 +100,9 @@ class SlackApiServiceProvider extends ServiceProvider
 
     public function registerSlackMethod($name)
     {
-        $contract = str_finish($this->contractsNamespace, '\\')."Slack{$name}";
-        $shortcut = $this->shortcutPrefix.snake_case($name);
-        $class = str_finish($this->methodsNamespace, '\\').$name;
+        $contract = str_finish($this->contractsNamespace, '\\') . "Slack{$name}";
+        $shortcut = $this->shortcutPrefix . snake_case($name);
+        $class = str_finish($this->methodsNamespace, '\\') . $name;
 
         $this->registerSlackSingletons($contract, $class, $shortcut);
     }

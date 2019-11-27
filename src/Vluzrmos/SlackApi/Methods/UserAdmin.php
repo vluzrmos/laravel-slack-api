@@ -29,7 +29,8 @@ class UserAdmin extends SlackMethod implements SlackUserAdmin
      *
      * @return array
      */
-    public function setInactive($user = null){
+    public function setInactive($user = null)
+    {
         return $this->method('setInactive', [
             'user' => $user,
             'set_active' => true,
@@ -43,7 +44,8 @@ class UserAdmin extends SlackMethod implements SlackUserAdmin
      *
      * @return array
      */
-    public function setRegular($user = null){
+    public function setRegular($user = null)
+    {
         return $this->method('setRegular', [
             'user' => $user,
             'set_active' => true,
@@ -57,7 +59,8 @@ class UserAdmin extends SlackMethod implements SlackUserAdmin
      *
      * @return array
      */
-    public function setAdmin($user = null){
+    public function setAdmin($user = null)
+    {
         return $this->method('setAdmin', [
             'user' => $user,
             'set_active' => true,

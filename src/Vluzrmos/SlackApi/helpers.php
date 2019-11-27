@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('slack')) {
+if (!function_exists('slack')) {
 
     /**
      * Helper to easy load an slack method or the api.
