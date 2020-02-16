@@ -1,7 +1,7 @@
 {
     "name": "vluzrmos/slack-api",
     "description": "Wrapper for Slack.com WEB API.",
-    "license": "DBAD",
+    "license": "MIT",
     "keywords":["Laravel", "Lumen", "Slack"],
     "authors": [
         {
