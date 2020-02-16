@@ -100,7 +100,7 @@ class User extends SlackMethod implements SlackUser
      *
      * @return array
      */
-    public function getUsersIDsByNicks($nicks, $force = false,  $cacheMinutes = 1)
+    public function getUsersIDsByNicks($nicks, $force = false, $cacheMinutes = 1)
     {
         $users = $this->cacheGet('list');
 
