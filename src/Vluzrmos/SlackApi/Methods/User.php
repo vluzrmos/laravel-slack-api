@@ -130,7 +130,7 @@ class User extends SlackMethod implements SlackUser
     /**
      * Verify if a given nick is for the user.
      *
-     * @param array $user
+     * @param array|object $user
      * @param string $nick
      *
      * @return bool
@@ -138,8 +138,13 @@ class User extends SlackMethod implements SlackUser
     protected function isUserNick($user, $nick)
     {
         $nick = str_replace('@', '', $nick);
+        $user = (object) $user;
 
-        return $nick == $user->name || $nick == $user->id;
+        if (!empty($user->name) && $nick === $user->name) {
+            return true;
+        }
+
+        return !empty($user->id) && $nick === $user->id;
     }
 
     /**
