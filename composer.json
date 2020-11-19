@@ -10,10 +10,9 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
-        "illuminate/support": "~6.0",
-        "illuminate/cache": "~6.0",
-        "guzzlehttp/guzzle":"~5.3|~6.0",
+        "illuminate/support": "~6.0 || ~7.0 || ~8.0",
+        "illuminate/cache": "~6.0 || ~7.0 || ~8.0",
+        "guzzlehttp/guzzle":"~5.3 || ~6.0 || ~7.0",
         "nesbot/carbon": "1.* || 2.*"
     },
     "autoload": {
@@ -23,6 +22,32 @@
         "files" : [
             "src/Vluzrmos/SlackApi/helpers.php"
         ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vluzrmos\\SlackApi\\SlackApiServiceProvider"
+            ],
+            "aliases": {
+                "SlackApi": "Vluzrmos\\SlackApi\\Facades\\SlackApi",
+                "SlackChannel": "Vluzrmos\\SlackApi\\Facades\\SlackChannel",
+                "SlackChat": "Vluzrmos\\SlackApi\\Facades\\SlackChat",
+                "SlackFile": "Vluzrmos\\SlackApi\\Facades\\SlackFile",
+                "SlackGroup": "Vluzrmos\\SlackApi\\Facades\\SlackGroup",
+                "SlackInstantMessage": "Vluzrmos\\SlackApi\\Facades\\SlackInstantMessage",
+                "SlackOAuth": "Vluzrmos\\SlackApi\\Facades\\SlackOAuth",
+                "SlackOAuthV2": "Vluzrmos\\SlackApi\\Facades\\SlackOAuthV2",
+                "SlackRealTimeMessage": "Vluzrmos\\SlackApi\\Facades\\SlackRealTimeMessage",
+                "SlackSearch": "Vluzrmos\\SlackApi\\Facades\\SlackSearch",
+                "SlackStar": "Vluzrmos\\SlackApi\\Facades\\SlackStar",
+                "SlackTeam": "Vluzrmos\\SlackApi\\Facades\\SlackTeam",
+                "SlackUser": "Vluzrmos\\SlackApi\\Facades\\SlackUser",
+                "SlackUserAdmin": "Vluzrmos\\SlackApi\\Facades\\SlackUserAdmin"
+            }
+        }
     },
     "minimum-stability": "dev"
 }

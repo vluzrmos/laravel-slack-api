@@ -13,47 +13,30 @@ This package provides a simple way to use [Slack API](https://api.slack.com/web#
 ## Instalation on Laravel
 Add to `config/app.php`:
 
-```php
-<?php
+This package uses auto-discovery laravel's feature, the service provider and all the facades will be automatic discovered.
 
-[
-    'providers' => [
-        Vluzrmos\SlackApi\SlackApiServiceProvider::class,
-    ]
-]
+Service Provider:  `\Vluzrmos\SlackApi\SlackApiServiceProvider::class`
 
-?>
-```
-> The ::class notation is optional.
-
-
-and add the Facades to your aliases, if you need it
+Facades:
 
 ```php
-<?php
-
 [
-    'aliases' => [
-        'SlackApi'              => Vluzrmos\SlackApi\Facades\SlackApi::class,
-        'SlackChannel'          => Vluzrmos\SlackApi\Facades\SlackChannel::class,
-        'SlackChat'             => Vluzrmos\SlackApi\Facades\SlackChat::class,
-        'SlackGroup'            => Vluzrmos\SlackApi\Facades\SlackGroup::class,
-        'SlackFile'             => Vluzrmos\SlackApi\Facades\SlackFile::class,
-        'SlackSearch'           => Vluzrmos\SlackApi\Facades\SlackSearch::class,
-        'SlackInstantMessage'   => Vluzrmos\SlackApi\Facades\SlackInstantMessage::class,
-        'SlackUser'             => Vluzrmos\SlackApi\Facades\SlackUser::class,
-        'SlackStar'             => Vluzrmos\SlackApi\Facades\SlackStar::class,
-        'SlackUserAdmin'        => Vluzrmos\SlackApi\Facades\SlackUserAdmin::class,
-        'SlackRealTimeMessage'  => Vluzrmos\SlackApi\Facades\SlackRealTimeMessage::class,
-        'SlackTeam'             => Vluzrmos\SlackApi\Facades\SlackTeam::class,
-        'SlackOAuth'          => Vluzrmos\SlackApi\Facades\SlackOAuth::class,
-        'SlackOAuthV2'          => Vluzrmos\SlackApi\Facades\SlackOAuthV2::class,
-    ]
+    'SlackApi'              => Vluzrmos\SlackApi\Facades\SlackApi::class,
+    'SlackChannel'          => Vluzrmos\SlackApi\Facades\SlackChannel::class,
+    'SlackChat'             => Vluzrmos\SlackApi\Facades\SlackChat::class,
+    'SlackGroup'            => Vluzrmos\SlackApi\Facades\SlackGroup::class,
+    'SlackFile'             => Vluzrmos\SlackApi\Facades\SlackFile::class,
+    'SlackSearch'           => Vluzrmos\SlackApi\Facades\SlackSearch::class,
+    'SlackInstantMessage'   => Vluzrmos\SlackApi\Facades\SlackInstantMessage::class,
+    'SlackUser'             => Vluzrmos\SlackApi\Facades\SlackUser::class,
+    'SlackStar'             => Vluzrmos\SlackApi\Facades\SlackStar::class,
+    'SlackUserAdmin'        => Vluzrmos\SlackApi\Facades\SlackUserAdmin::class,
+    'SlackRealTimeMessage'  => Vluzrmos\SlackApi\Facades\SlackRealTimeMessage::class,
+    'SlackTeam'             => Vluzrmos\SlackApi\Facades\SlackTeam::class,
+    'SlackOAuth'          => Vluzrmos\SlackApi\Facades\SlackOAuth::class,
+    'SlackOAuthV2'          => Vluzrmos\SlackApi\Facades\SlackOAuthV2::class,
 ]
-
-?>
 ```
-> The ::class notation is optional.
 
 ## Instalation on Lumen
 
@@ -111,9 +94,17 @@ $slackchat = slack('chat'); // or slack('slack.chat')
 ?>
 ```
 
+## Slack OAuth Token
+
+To get your slack token, you must create an app on [Slack Apps](https://api.slack.com/apps) and then give the permissions that you need at your app page on side menu "Features" -> "OAuth & Permissions", and then go to "Scopes" section, the token can be a `Bot Token` or `User Token` as you need.
+
+Then re/install the app to your workspace.
+
+> Note: If you edit any permission you must reinstall the app to your workspace.
+
 ## Configuration
 
-configure your slack team token in <code>config/services.php</code>
+Configure your slack team token in <code>config/services.php</code>
 
 ```php
 <?php
