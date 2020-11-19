@@ -156,6 +156,8 @@ class User extends SlackMethod implements SlackUser
      */
     protected function isSlackbotNick($nick)
     {
-        return $nick == 'slackbot' or $nick == '@slackbot' or $nick == 'USLACKBOT';
+        $names = ['slackbot', '@slackbot', 'USLACKBOT'];
+
+        return in_array($nick, $names, true);
     }
 }
