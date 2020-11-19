@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/vluzrmos/laravel-slack-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vluzrmos/laravel-slack-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This package provides a simple way to use [Slack API](https://api.slack.com).
+This package provides a simple way to use [Slack API](https://api.slack.com/web#methods).
 
 [![Latest Stable Version](https://poser.pugx.org/vluzrmos/slack-api/v/stable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Total Downloads](https://poser.pugx.org/vluzrmos/slack-api/downloads.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Latest Unstable Version](https://poser.pugx.org/vluzrmos/slack-api/v/unstable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![License](https://poser.pugx.org/vluzrmos/slack-api/license.svg)](https://packagist.org/packages/vluzrmos/slack-api)
 
@@ -46,6 +46,8 @@ and add the Facades to your aliases, if you need it
         'SlackUserAdmin'        => Vluzrmos\SlackApi\Facades\SlackUserAdmin::class,
         'SlackRealTimeMessage'  => Vluzrmos\SlackApi\Facades\SlackRealTimeMessage::class,
         'SlackTeam'             => Vluzrmos\SlackApi\Facades\SlackTeam::class,
+        'SlackOAuth'          => Vluzrmos\SlackApi\Facades\SlackOAuth::class,
+        'SlackOAuthV2'          => Vluzrmos\SlackApi\Facades\SlackOAuthV2::class,
     ]
 ]
 
@@ -297,6 +299,17 @@ Get information about an user on your team or just check your presence ou status
 `Vluzrmos\SlackApi\Contracts\SlackUserAdmin`
 
 Invite new members to your team.
+
+### OAuth API
+`Vluzrmos\SlackApi\Contracts\SlackOAuth`
+
+Methods in oauth slack api namespace.
+
+### OAuthV2 API
+`Vluzrmos\SlackApi\Contracts\SlackOAuthV2`
+
+Methods in oauth v2 slack api namespace.
+
 
 ## License
 
