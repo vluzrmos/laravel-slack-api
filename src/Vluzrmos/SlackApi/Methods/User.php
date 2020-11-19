@@ -32,7 +32,7 @@ class User extends SlackMethod implements SlackUser
     {
         $user = $this->getUsersIDsByNicks($user);
 
-        return $this->method('info', ['user' => isset($user[0]) ? $user[0]: null]);
+        return $this->method('info', ['user' => isset($user[0]) ? $user[0] : null]);
     }
 
     /**
@@ -104,11 +104,11 @@ class User extends SlackMethod implements SlackUser
     {
         $users = $this->cacheGet('list');
 
-        if (! $users || $force) {
+        if (!$users || $force) {
             $users = $this->cachePut('list', $this->lists(), $cacheMinutes);
         }
 
-        if (! is_array($nicks)) {
+        if (!is_array($nicks)) {
             $nicks = preg_split('/, ?/', $nicks);
         }
 

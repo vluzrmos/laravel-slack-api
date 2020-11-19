@@ -47,7 +47,7 @@ abstract class SlackMethod
      */
     public function method($method, $params = [], $http = 'post')
     {
-        return call_user_func([$this->getApi(), $http], $this->methodsGroup.$method, $params);
+        return call_user_func([$this->getApi(), $http], $this->methodsGroup . $method, $params);
     }
 
     /**
@@ -140,6 +140,6 @@ abstract class SlackMethod
      */
     protected function cachePrefix($key = null)
     {
-        return $this->cachePrefix.$key;
+        return $this->cachePrefix . $key;
     }
 }
