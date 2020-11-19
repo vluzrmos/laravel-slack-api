@@ -1,4 +1,4 @@
-## Laravel 5 e Lumen - Slack API
+## Laravel e Lumen - Slack API
 
 [![Join the chat at https://gitter.im/vluzrmos/laravel-slack-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vluzrmos/laravel-slack-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -10,7 +10,7 @@ This package provides a simple way to use [Slack API](https://api.slack.com/web#
 
 `composer require vluzrmos/slack-api`
 
-## Instalation on Laravel 5
+## Instalation on Laravel
 Add to `config/app.php`:
 
 ```php
