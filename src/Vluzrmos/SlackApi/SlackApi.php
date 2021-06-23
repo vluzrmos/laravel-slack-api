@@ -175,7 +175,7 @@ class SlackApi implements Contract
     {
         if (is_callable($client)) {
             $this->client = value($client);
-        } elseif (is_null($client) and is_null($this->client)) {
+        } elseif (is_null($client) && is_null($this->client)) {
             $this->client = new Client(['verify' => false]);
         } else {
             $this->client = $client;
@@ -196,15 +196,17 @@ class SlackApi implements Contract
      */
     protected function http($verb = 'get', $url = '', $parameters = [])
     {
+        $client = $this->getHttpClient();
+
         /* @var  \GuzzleHttp\Psr7\Response|\GuzzleHttp\Message\Response $response */
         try {
-            $response = $this->getHttpClient()->$verb($url, $parameters);
+            $response = $client->$verb($url, $parameters);
         } catch (\InvalidArgumentException $e) {
             $parameters['body'] = $parameters['form_params'];
 
             unset($parameters['form_params']);
 
-            $response = $this->getHttpClient()->$verb($url, $parameters);
+            $response = $client->$verb($url, $parameters);
         }
 
         /** @var  $contents */
@@ -231,12 +233,16 @@ class SlackApi implements Contract
      */
     protected function mergeParameters($parameters = [])
     {
-        $options['query'] = [
-            't' => time(),
-            'token' => $this->getToken(),
+        $options = [
+            'query' => [
+                't' => time()
+            ],
+            'headers' => [
+                'Authorization' => "Bearer {$this->getToken()}"
+            ]
         ];
 
-        if (isset($parameters['attachments']) and is_array($parameters['attachments'])) {
+        if (isset($parameters['attachments']) && is_array($parameters['attachments'])) {
             $parameters['attachments'] = json_encode($parameters['attachments']);
         }
 
