@@ -11,6 +11,6 @@ class SlackOAuthV2 extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'slack.oauthv2';
+        return 'slack.o_auth_v2';
     }
 }
