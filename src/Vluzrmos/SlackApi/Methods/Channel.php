@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackChannel;
 
 class Channel extends SlackMethod implements SlackChannel
 {
-    protected $methodsGroup = 'channels.';
+    protected $methodsGroup = 'conversations.';
 
     /**
      * This method archives a channel.
@@ -36,7 +36,7 @@ class Channel extends SlackMethod implements SlackChannel
      * This method returns a portion of messages/events from the specified channel.
      * To read the entire history for a channel, call the method with no `latest` or `oldest` arguments,
      * and then continue paging using the instructions below.
-     * @see https://api.slack.com/methods/channels.history
+     * @see https://api.slack.com/methods/conversations.history
      *
      * @param string $channel Channel to fetch history for.
      * @param int    $count Number of messages to return, between 1 and 1000.
@@ -54,7 +54,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method returns information about a team channel.
      *
-     * @see https://api.slack.com/methods/channels.info
+     * @see https://api.slack.com/methods/conversations.info
      *
      * @param string $channel Channel to get info on
      *
@@ -68,7 +68,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method is used to invite a user to a channel. The calling user must be a member of the channel.
      *
-     * @see https://api.slack.com/methods/channels.invite
+     * @see https://api.slack.com/methods/conversations.invite
      *
      * @param string $channel
      * @param string $user
@@ -83,7 +83,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method is used to join a channel. If the channel does not exist, it is created.
      *
-     * @see https://api.slack.com/methods/channels.join
+     * @see https://api.slack.com/methods/conversations.join
      *
      * @param string $name Channel name to join in
      *
@@ -97,7 +97,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method allows a user to remove another member from a team channel.
      *
-     * @see https://api.slack.com/methods/channels.kick
+     * @see https://api.slack.com/methods/conversations.kick
      *
      * @param string $channel
      * @param string $user
@@ -112,7 +112,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method is used to leave a channel.
      *
-     * @see https://api.slack.com/methods/channels.leave
+     * @see https://api.slack.com/methods/conversations.leave
      *
      * @param string $channel
      *
@@ -124,12 +124,12 @@ class Channel extends SlackMethod implements SlackChannel
     }
 
     /**
-     * This method returns a list of all channels in the team. This includes channels the caller is in, channels they are not currently in, and archived channels.
+     * This method returns a list of all channels in the team. This includes channels the caller is in, channels they are not currently in, and archived conversations.
      * The number of (non-deactivated) members in each channel is also returned.
      *
-     * @see https://api.slack.com/methods/channels.list
+     * @see https://api.slack.com/methods/conversations.list
      *
-     * @param int $exclude_archived Don't return archived channels.
+     * @param int $exclude_archived Don't return archived conversations.
      *
      * @return array
      */
@@ -139,12 +139,12 @@ class Channel extends SlackMethod implements SlackChannel
     }
 
     /**
-     * This method returns a list of all channels in the team. This includes channels the caller is in, channels they are not currently in, and archived channels.
+     * This method returns a list of all channels in the team. This includes channels the caller is in, channels they are not currently in, and archived conversations.
      * The number of (non-deactivated) members in each channel is also returned.
      *
-     * @see https://api.slack.com/methods/channels.list
+     * @see https://api.slack.com/methods/conversations.list
      *
-     * @param int $exclude_archived Don't return archived channels.
+     * @param int $exclude_archived Don't return archived conversations.
      *
      * @return array
      */
@@ -156,7 +156,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method moves the read cursor in a channel.
      *
-     * @see https://api.slack.com/methods/channels.mark
+     * @see https://api.slack.com/methods/conversations.mark
      *
      * @param string     $channel Channel to set reading cursor in.
      * @param string|int $ts      Timestamp of the most recently seen message.
@@ -174,7 +174,7 @@ class Channel extends SlackMethod implements SlackChannel
      * The only people who can rename a channel are team admins, or the person that originally
      * created the channel. Others will recieve a "not_authorized" error.
      *
-     * @see https://api.slack.com/methods/channels.rename
+     * @see https://api.slack.com/methods/conversations.rename
      *
      * @param string $channel Channel to rename
      *
@@ -190,7 +190,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method is used to change the purpose of a channel. The calling user must be a member of the channel.
      *
-     * @see https://api.slack.com/methods/channels.setPurpose
+     * @see https://api.slack.com/methods/conversations.setPurpose
      *
      * @param string $channel Channel to set the purpose of
      * @param string $purpose The new purpose
@@ -205,7 +205,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method is used to change the topic of a channel. The calling user must be a member of the channel.
      *
-     * @see https://api.slack.com/methods/channels.setTopic
+     * @see https://api.slack.com/methods/conversations.setTopic
      *
      * @param string $channel
      * @param string $topic
@@ -220,7 +220,7 @@ class Channel extends SlackMethod implements SlackChannel
     /**
      * This method unarchives a channel. The calling user is added to the channel.
      *
-     * @see https://api.slack.com/methods/channels.unarchive
+     * @see https://api.slack.com/methods/conversations.unarchive
      *
      * @param string $channel Channel to unarchive
      *

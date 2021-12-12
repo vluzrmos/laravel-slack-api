@@ -24,7 +24,7 @@ class InstantMessage extends SlackMethod implements SlackInstantMessage
      * This method returns a portion of messages/events from the specified channel.
      * To read the entire history for a channel, call the method with no `latest` or `oldest` arguments,
      * and then continue paging using the instructions below.
-     * @see https://api.slack.com/methods/channels.history
+     * @see https://api.slack.com/methods/conversations.history
      *
      * @param string $channel Channel to fetch history for.
      * @param int    $count Number of messages to return, between 1 and 1000.
