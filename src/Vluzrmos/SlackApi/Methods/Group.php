@@ -6,7 +6,7 @@ use Vluzrmos\SlackApi\Contracts\SlackGroup;
 
 class Group extends Channel implements SlackGroup
 {
-    protected $methodsGroup = 'groups.';
+    protected $methodsGroup = 'usergroups.';
 
     /**
      * This method opens a private group.
@@ -41,12 +41,12 @@ class Group extends Channel implements SlackGroup
      * - Adds all members of the existing group to the new group.
      *
      * This is useful when inviting a new member to an existing group while hiding all previous
-     * chat history from them. In this scenario you can call groups.createChild followed by groups.invite.
+     * chat history from them. In this scenario you can call usergroups.createChild followed by usergroups.invite.
      *
      * The new group will have a special parent_group property pointing to the original archived group.
      * This will only be returned for members of both groups, so will not be visible to any newly invited members.
      *
-     * @see https://api.slack.com/methods/groups.createChild
+     * @see https://api.slack.com/methods/usergroups.createChild
      *
      * @param $channel
      *
