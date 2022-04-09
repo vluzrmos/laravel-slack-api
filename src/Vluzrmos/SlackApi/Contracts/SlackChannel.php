@@ -7,7 +7,7 @@ interface SlackChannel
     public function archive($channel);
     public function unarchive($channel);
     public function create($name);
-    public function history($channel, $count = 100, $latest = null, $oldest = 0, $inclusive = 1);
+    public function history($channel, $limit = 100, $latest = null, $oldest = 0, $inclusive = 1);
     public function info($channel);
     public function invite($channel, $user);
     public function join($name);

@@ -27,16 +27,16 @@ class InstantMessage extends SlackMethod implements SlackInstantMessage
      * @see https://api.slack.com/methods/conversations.history
      *
      * @param string $channel Channel to fetch history for.
-     * @param int    $count Number of messages to return, between 1 and 1000.
+     * @param int    $limit Number of messages to return, between 1 and 1000.
      * @param string $latest End of time range of messages to include in results.
      * @param int|string    $oldest Start of time range of messages to include in results.
      * @param int    $inclusive Include messages with latest or oldest timestamp in results.
      *
      * @return array
      */
-    public function history($channel, $count = 100, $latest = null, $oldest = 0, $inclusive = 1)
+    public function history($channel, $limit = 100, $latest = null, $oldest = 0, $inclusive = 1)
     {
-        return $this->method('history', compact('channel', 'count', 'latest', 'oldest', 'inclusive'));
+        return $this->method('history', compact('channel', 'limit', 'latest', 'oldest', 'inclusive'));
     }
 
     /**
