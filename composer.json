@@ -2,7 +2,11 @@
     "name": "vluzrmos/slack-api",
     "description": "Wrapper for Slack.com WEB API.",
     "license": "MIT",
-    "keywords":["Laravel", "Lumen", "Slack"],
+    "keywords": [
+        "Laravel",
+        "Lumen",
+        "Slack"
+    ],
     "authors": [
         {
             "name": "Vagner do Carmo",
@@ -10,16 +14,16 @@
         }
     ],
     "require": {
-        "illuminate/support": "~6.0 || ~7.0 || ~8.0 || ~9.0",
-        "illuminate/cache": "~6.0 || ~7.0 || ~8.0 || ~9.0",
-        "guzzlehttp/guzzle":"~5.3 || ~6.0 || ~7.0",
+        "illuminate/support": "~6.0 || ~7.0 || ~8.0 || ~9.0|^10.0",
+        "illuminate/cache": "~6.0 || ~7.0 || ~8.0 || ~9.0|^10.0",
+        "guzzlehttp/guzzle": "~5.3 || ~6.0 || ~7.0",
         "nesbot/carbon": "1.* || 2.*"
     },
     "autoload": {
         "psr-4": {
             "Vluzrmos\\": "src/Vluzrmos/"
         },
-        "files" : [
+        "files": [
             "src/Vluzrmos/SlackApi/helpers.php"
         ]
     },
