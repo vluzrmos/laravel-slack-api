@@ -91,7 +91,7 @@ class Channel extends SlackMethod implements SlackChannel
      */
     public function join($name)
     {
-        return $this->method('join', ['name' => $name]);
+        return $this->method('join', ['channel' => $name]);
     }
 
     /**
