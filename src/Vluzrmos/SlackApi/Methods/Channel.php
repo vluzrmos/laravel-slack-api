@@ -133,9 +133,9 @@ class Channel extends SlackMethod implements SlackChannel
      *
      * @return array
      */
-    public function all($exclude_archived = 1)
+    public function all($exclude_archived = 1, $options = [])
     {
-        return $this->method('list', compact('exclude_archived'));
+        return $this->method('list', array_merge(compact('exclude_archived'), $options));
     }
 
     /**
@@ -148,9 +148,9 @@ class Channel extends SlackMethod implements SlackChannel
      *
      * @return array
      */
-    public function lists($exclude_archived = 1)
+    public function lists($exclude_archived = 1, $options = [])
     {
-        return $this->all($exclude_archived);
+        return $this->all($exclude_archived, $options);
     }
 
     /**
