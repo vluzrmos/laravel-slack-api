@@ -2,6 +2,7 @@
 
 namespace Vluzrmos\SlackApi;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -67,8 +68,8 @@ class SlackApiServiceProvider extends ServiceProvider
             $this->app->configure('services');
         }
 
-        $this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackApi', function () {
-            $api = new SlackApi(null, config('services.slack.token'));
+        $this->app->singleton('Vluzrmos\SlackApi\Contracts\SlackApi', function (Application $app) {
+            $api = new SlackApi($app->make(\GuzzleHttp\Client::class), config('services.slack.token'));
 
             return $api;
         });
