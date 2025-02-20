@@ -148,6 +148,9 @@ SlackUserAdmin::invite("example@example.com", [
 //Send a message to someone or channel or group
 SlackChat::message('#general', 'Hello my friends!');
 
+//Send a block to someone or channel or group
+SlackChat::block('#general', '[{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]');
+
 //Upload a file/snippet
 SlackFile::upload([
     'filename' => 'sometext.txt',
