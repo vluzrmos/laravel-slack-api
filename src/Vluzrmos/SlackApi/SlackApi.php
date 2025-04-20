@@ -242,6 +242,10 @@ class SlackApi implements Contract
             ]
         ];
 
+        if (isset($parameters['blocks']) && is_array($parameters['blocks'])) {
+            $parameters['blocks'] = json_encode($parameters['blocks']);
+        }
+
         if (isset($parameters['attachments']) && is_array($parameters['attachments'])) {
             $parameters['attachments'] = json_encode($parameters['attachments']);
         }
