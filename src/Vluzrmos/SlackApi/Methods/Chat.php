@@ -53,6 +53,23 @@ class Chat extends SlackMethod implements SlackChat
         return $this->method('postMessage', array_merge(compact('channel', 'text'), ['as_user' => !isset($options['username'])], $options));
     }
 
+
+    /**
+     * This method posts a Slack block to a channel.
+     *
+     * @see https://api.slack.com/methods/chat.postMessage
+     *
+     * @param string $channel Channel to send message to. Can be a public channel, private group or IM channel. Can be an encoded ID, or a name.
+     * @param string $blocks Slack Block structure to send Example: [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}].
+     * @param array $options
+     *
+     * @return array
+     */
+    public function block($channel, $blocks, $options = [])
+    {
+        return $this->method('postMessage', array_merge(compact('channel', 'blocks'), ['as_user' => !isset($options['username'])], $options));
+    }
+
     /**
      * Alias to message().
      * @see https://api.slack.com/methods/chat.postMessage
