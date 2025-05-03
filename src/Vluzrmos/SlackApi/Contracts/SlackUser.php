@@ -10,4 +10,5 @@ interface SlackUser
     public function all();
     public function setActive();
     public function setPresence($presence);
+    public function lookupByEmail($email);
 }
